@@ -1,0 +1,63 @@
+@url=http://localhost:3003/api
+@json=Content-Type: application/json
+
+
+### GET
+get {{url}}/hello
+
+
+### 查询所有用户
+get {{url}}/users?limit=10&page=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+
+
+### 注册
+post {{url}}/register
+# Content-Type: application/json
+{{json}}
+
+{
+  "username": "admin5",
+  "password": "admin"
+}
+
+
+### 登录
+post {{url}}/login
+{{json}}
+
+{
+  "username": "admin5",
+  "password": "admin"
+}
+
+
+
+### 个人信息
+get {{url}}/users/64ad3521ba6d0c18ceb1dd25
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+
+
+### 修改个人信息
+post {{url}}/users/64ad3521ba6d0c18ceb1dd25
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+{{json}}
+
+{
+  "username": "admin5",
+  "password": "ajssss",
+  "nickname": "ssssssssss"
+}
+
+
+### 修改密码
+post {{url}}/users/updatePassword
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+{{json}}
+
+{
+  "id":"64ad3521ba6d0c18ceb1dd25",
+  "oldPassword": "ajssss",
+  "newPassword": "ssssssssss"
+}
+
