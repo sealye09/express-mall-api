@@ -16,7 +16,7 @@ export async function register(req, res) {
     // 检查用户名是否已存在
     const user = await User.findOne({ username });
     if (!!user && user.username === username) {
-      return res.status(409).json({ message: "Username already exists" });
+      return res.status(409).json({ code: 409, message: "Username already exists" });
     }
 
     // 生成盐并哈希密码
@@ -108,6 +108,7 @@ export async function updateUser(req, res) {
 }
 
 // 修改密码
+// TODO ERROR
 export async function updatePassword(req, res) {
   const { id, oldPassword, newPassword } = req.body;
   console.log(

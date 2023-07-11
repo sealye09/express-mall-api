@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema(
   {
-    orderTime: { type: Date, default: Date.now },
     status: { type: String },
+    price: { type: Number },
+    payTime: { type: Date },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
     products: [
       {
         productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },

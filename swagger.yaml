@@ -3,9 +3,15 @@ info:
   title: Mall API
   version: 1.0.0
 paths:
-  /users:
+  /api/test:
     get:
-      summary: Get all users
+      summary: test
       responses:
-        '200':
+        "200":
+          description: OK
+  /api/hello:
+    get:
+      summary: hello
+      responses:
+        "200":
           description: OK

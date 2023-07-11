@@ -9,8 +9,7 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 
 // routes import
-import TestRoutes from "./routes/test.js";
-import UserRoutes from "./routes/user.js";
+import routes from "./routes/index.js";
 
 /* 配置 */
 dotenv.config();
@@ -30,8 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 /* 路由 */
-app.use("/api", TestRoutes);
-app.use("/api", UserRoutes);
+app.use("/", routes);
 
 /* 数据库 */
 const PORT = process.env.PORT || 3003;

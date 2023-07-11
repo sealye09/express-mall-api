@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     nickname: { type: String, default: "user" },
     avatar: { type: String, default: "" },
     gender: { type: String, default: "" },
-    userType: { type: String, default: "user" },
+    role: { type: String, default: "user" },
     address: { type: String, default: "" },
     cart: [
       {

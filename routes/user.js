@@ -23,8 +23,6 @@ router.post("/users/:id", authenticateToken, updateUser);
 
 router.get("/users/:id", authenticateToken, getUserInfo);
 
-router.post("/users/update", updateUser);
-
 router.post("users/updatePassword", updatePassword);
 
 export default router;
