@@ -34,13 +34,13 @@ post {{url}}/login
 
 
 ### 个人信息
-get {{url}}/users/64ad51eca071364fdfb91e41
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTA4MDUxNX0.PwXbsnBGgmS70PdE7VQ_38nqDZzquRrfaDHkarDeT2k
+get {{url}}/users/64adfcc25d662ba40034c385
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTEyNDA1NX0.BRKY1xcyvNxgdfzfwuREL4KsYG7z_ZH-Cd9nAOzKfWI
 
 
 ### 修改个人信息
-post {{url}}/users/64ad51eca071364fdfb91e41
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTA4MDUxNX0.PwXbsnBGgmS70PdE7VQ_38nqDZzquRrfaDHkarDeT2k
+post {{url}}/users/64adfcc25d662ba40034c385
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTEyNDA1NX0.BRKY1xcyvNxgdfzfwuREL4KsYG7z_ZH-Cd9nAOzKfWI
 {{json}}
 
 {
@@ -54,8 +54,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 {{json}}
 
 {
-  "id":"64ad51eca071364fdfb91e41",
-  "oldPassword": "ajssss",
-  "newPassword": "ssssssssss"
+  "id":"64adfcc25d662ba40034c385",
+  "oldPassword": "qqqq",
+  "newPassword": "admin"
 }
 
