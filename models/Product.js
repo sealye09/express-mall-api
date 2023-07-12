@@ -10,8 +10,12 @@ const ProductSchema = new mongoose.Schema(
     banners: [{ type: mongoose.Schema.Types.ObjectId, ref: "Banner" }],
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     status: { type: Boolean },
+    hot: { type: Boolean },
   },
   { timestamps: true },
 );
 
 const Product = mongoose.model("Product", ProductSchema);
+
+
+export default Product;

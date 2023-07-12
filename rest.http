@@ -8,7 +8,7 @@ get {{url}}/test
 
 ### 查询所有用户
 get {{url}}/users?page=1&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
 
 
 ### 注册
@@ -35,12 +35,12 @@ post {{url}}/login
 
 ### 个人信息
 get {{url}}/users/64adfcc25d662ba40034c385
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTEyNDA1NX0.BRKY1xcyvNxgdfzfwuREL4KsYG7z_ZH-Cd9nAOzKfWI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
 
 
 ### 修改个人信息
 post {{url}}/users/update
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTEyNDA1NX0.BRKY1xcyvNxgdfzfwuREL4KsYG7z_ZH-Cd9nAOzKfWI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
 {{json}}
 
 {
@@ -51,7 +51,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ### 修改密码
 post {{url}}/users/updatePassword
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
 {{json}}
 
 {
@@ -63,10 +63,36 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ### 删除用户
 delete {{url}}/users/delete
-Authorization: Bearer eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
 {{json}}
 
 {
   "id":["64adfcc25d662ba40034c385"]
 }
 
+
+
+### 添加商品
+post {{url}}/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{json}}
+
+{
+  "name":"商品1",
+  "price": 100,
+  "desc": "商品1描述",
+  "status": 1,
+  "hot":true,
+  "stock": 100
+}
+
+
+
+### 查询所有商品
+get {{url}}/products?page=1&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+
+
+### 查询商品详情
+get {{url}}/products/64ae5d734c91a39a13221653
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0

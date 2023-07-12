@@ -13,3 +13,5 @@ const AddressSchema = new mongoose.Schema(
 );
 
 const Product = mongoose.model("Product", AddressSchema);
+
+export default Product;

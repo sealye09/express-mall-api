@@ -10,3 +10,6 @@ const BannerSchema = new mongoose.Schema({
 });
 
 const Category = mongoose.model("Category", BannerSchema);
+
+
+export default Category;
