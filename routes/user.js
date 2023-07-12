@@ -6,6 +6,7 @@ import {
   getUserInfo,
   updateUser,
   updatePassword,
+  deleteUserByIds
 } from "../controllers/UserController.js";
 
 // 中间件
@@ -29,6 +30,9 @@ router.post("/users/updatePassword", authenticateToken, updatePassword);
 router.get("/users/:id", authenticateToken, getUserInfo);
 
 // 更新用户信息
-router.post("/users/:id", authenticateToken, updateUser);
+router.post("/users/update", authenticateToken, updateUser);
+
+// 删除用户
+router.post("/users/delete", authenticateToken, deleteUserByIds);
 
 export default router;

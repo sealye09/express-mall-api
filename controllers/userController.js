@@ -16,7 +16,7 @@ export async function register(req, res) {
     // 检查用户名是否已存在
     const user = await User.findOne({ username });
     if (!!user && user.username === username) {
-      return res.status(409).json({ code: 409, message: "Username already exists" });
+      return res.status(409).json({ code: 409, message: "Username already exists", data: {} });
     }
 
     // 生成盐并哈希密码
@@ -27,10 +27,10 @@ export async function register(req, res) {
     const newUser = { username, password: hashedPassword };
     await User.create(newUser);
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(200).json({ code: 200, message: "User registered successfully", data: {} });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
@@ -41,29 +41,31 @@ export async function login(req, res) {
     // 查找用户
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ code: 401, message: "Invalid credentials", data: {} });
     }
 
     // 验证密码
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ code: 401, message: "Invalid credentials", data: {} });
     }
 
     // 生成JWT
     const token = jwt.sign({ username }, JWT_SECRET);
 
-    res.json({ user, token });
+    res.status(200).json({ code: 200, message: "Login success", data: { user, token } });
   } catch (error) {
     console.error("Error logging in:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
 // 分页查询用户列表
 export async function getUsers(req, res) {
   const page = parseInt(req.query.page) || 1; // 当前页码，默认为第一页
+  console.log("🚀 ~ file: userController.js:66 ~ getUsers ~ page:", page);
   const limit = parseInt(req.query.limit) || 10; // 每页显示的用户数量，默认为10个
+  console.log("🚀 ~ file: userController.js:68 ~ getUsers ~ limit:", limit);
 
   try {
     const totalUsers = await User.countDocuments(); // 获取用户总数
@@ -74,21 +76,24 @@ export async function getUsers(req, res) {
     const users = await User.find().skip(offset).limit(limit); // 查询用户数据
 
     res.status(200).json({
-      page,
-      totalPages,
-      totalUsers,
-      users,
+      code: 200,
+      message: "Users fetched successfully",
+      data: {
+        page,
+        pages: totalPages,
+        total: totalUsers,
+        users,
+      },
     });
   } catch (error) {
     console.error("Error getting users:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
 // 更新用户信息
 export async function updateUser(req, res) {
-  const { id } = req.params;
-  const updateData = req.body;
+  const { id, ...updateData } = req.body;
   delete updateData.password; // 禁止更新密码
   try {
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
@@ -96,18 +101,25 @@ export async function updateUser(req, res) {
     });
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({
+        code: 401,
+        message: "Invalid user id",
+        data: {},
+      });
     }
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({
+      code: 200,
+      message: "User updated successfully",
+      data: { user: updatedUser },
+    });
   } catch (error) {
     console.error("Error updating user:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
 // 修改密码
-// TODO ERROR
 export async function updatePassword(req, res) {
   const { id, oldPassword, newPassword } = req.body;
 
@@ -115,13 +127,13 @@ export async function updatePassword(req, res) {
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ code: 401, message: "Invalid user id", data: {} });
     }
 
     // 验证旧密码
     const passwordMatch = await bcrypt.compare(oldPassword, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid old password" });
+      return res.status(401).json({ code: 401, message: "Invalid old password", data: {} });
     }
 
     // 生成盐并哈希新密码
@@ -132,10 +144,10 @@ export async function updatePassword(req, res) {
     user.password = hashedPassword;
     await user.save();
 
-    res.status(200).json({ message: "Password updated successfully" });
+    res.status(200).json({ code: 200, message: "Password updated successfully", data: {} });
   } catch (error) {
     console.error("Error updating password:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
@@ -145,11 +157,29 @@ export async function getUserInfo(req, res) {
   try {
     const user = await User.findById(id);
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(401).json({ code: 401, message: "Invalid user id", data: {} });
     }
-    res.status(200).json(user);
+    res
+      .status(200)
+      .json({ code: 200, message: "User info fetched successfully", data: { user: user } });
   } catch (error) {
     console.error("Error getting user info:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+  }
+}
+
+// 删除用户
+export async function deleteUserByIds(req, res) {
+  const { ids } = req.body;
+  try {
+    await User.deleteMany({ _id: { $in: ids } });
+    res.status(200).json({
+      code: 200,
+      message: "Users deleted successfully",
+      data: {},
+    });
+  } catch (error) {
+    console.error("Error deleting users:", error);
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }

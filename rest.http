@@ -3,11 +3,11 @@
 
 
 ### GET
-get {{url}}/hello
+get {{url}}/test
 
 
 ### 查询所有用户
-get {{url}}/users?limit=10&page=1
+get {{url}}/users?page=1&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
 
 
@@ -39,12 +39,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 
 ### 修改个人信息
-post {{url}}/users/64adfcc25d662ba40034c385
+post {{url}}/users/update
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTEyNDA1NX0.BRKY1xcyvNxgdfzfwuREL4KsYG7z_ZH-Cd9nAOzKfWI
 {{json}}
 
 {
-  "nickname": "asdasss"
+  "id":"64adfcc25d662ba40034c385",
+  "nickname": "aaaaa"
 }
 
 
@@ -57,5 +58,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
   "id":"64adfcc25d662ba40034c385",
   "oldPassword": "qqqq",
   "newPassword": "admin"
+}
+
+
+### 删除用户
+delete {{url}}/users/delete
+Authorization: Bearer eyJ1c2VybmFtZSI6ImFkbWluNSIsImlhdCI6MTY4OTA3NjMxNH0.ZTvvX2M12KctzqK_3GnnWdkM1Rs2zGceHVPE0UCcll4
+{{json}}
+
+{
+  "id":["64adfcc25d662ba40034c385"]
 }
 

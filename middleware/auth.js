@@ -8,8 +8,9 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 function authenticateToken(req, res, next) {
-  let token = req.headers.authorization
+  let token = req.headers.authorization;
 
+  console.log(token);
   if (token) {
     token = token.split(" ").pop();
     jwt.verify(token, JWT_SECRET, (err, decoded) => {
@@ -17,7 +18,9 @@ function authenticateToken(req, res, next) {
         // 验证失败
         console.error("jwt verification failed:", err);
         res.status(403).send({
+          code: 403,
           message: "Invalid token!",
+          data: {},
         });
       }
       // JWT验证成功，将用户信息附加到请求对象中
@@ -27,7 +30,9 @@ function authenticateToken(req, res, next) {
   } else {
     // 请求中缺少JWT，返回未认证状态码
     res.status(401).send({
+      code: 401,
       message: "Invalid token!",
+      data: {},
     });
   }
 }
