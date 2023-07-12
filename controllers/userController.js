@@ -62,7 +62,6 @@ export async function login(req, res) {
 
 // 分页查询用户列表
 export async function getUsers(req, res) {
-  console.log(req.query);
   const page = parseInt(req.query.page) || 1; // 当前页码，默认为第一页
   const limit = parseInt(req.query.limit) || 10; // 每页显示的用户数量，默认为10个
 
@@ -111,12 +110,6 @@ export async function updateUser(req, res) {
 // TODO ERROR
 export async function updatePassword(req, res) {
   const { id, oldPassword, newPassword } = req.body;
-  console.log(
-    "🚀 ~ file: userController.js:110 ~ updatePassword ~ id, oldPassword, newPassword :",
-    id,
-    oldPassword,
-    newPassword,
-  );
 
   try {
     const user = await User.findById(id);
