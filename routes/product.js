@@ -18,16 +18,22 @@ const router = express.Router();
 // 获取商品 limit: 10, page: 1
 router.get("/products", getProducts);
 
-// 获取商品详情
-router.get("/products/:id", getProductById);
-
 // 添加商品
 router.post("/products", authenticateToken, addProduct);
 
-// 更新商品
-router.post("/products/:id", authenticateToken, updateProduct);
-
 // 删除商品
 router.post("/products/delete", authenticateToken, deleteProductsByIds);
+
+// 获取热门商品
+router.get("/products/hot", getProductsByHot);
+
+// 获取新品商品
+router.get("/products/new", getProductsByNew);
+
+// 获取商品详情
+router.get("/products/:id", getProductById);
+
+// 更新商品
+router.post("/products/:id", authenticateToken, updateProduct);
 
 export default router;

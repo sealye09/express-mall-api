@@ -1,6 +1,10 @@
 @url=http://localhost:3003/api
 @json=Content-Type: application/json
 
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE1MTI0MX0.A9dfuiUj9u7yS3NFLcTvPE3Z9cK2oT6OLNgp0xxr16c
+
+@auth=Authorization: {{token}}
+
 
 ### GET
 get {{url}}/test
@@ -8,12 +12,11 @@ get {{url}}/test
 
 ### 查询所有用户
 get {{url}}/users?page=1&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 
 
 ### 注册
 post {{url}}/register
-# Content-Type: application/json
 {{json}}
 
 {
@@ -35,12 +38,12 @@ post {{url}}/login
 
 ### 个人信息
 get {{url}}/users/64adfcc25d662ba40034c385
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 
 
 ### 修改个人信息
 post {{url}}/users/update
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 {{json}}
 
 {
@@ -51,7 +54,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ### 修改密码
 post {{url}}/users/updatePassword
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 {{json}}
 
 {
@@ -63,7 +66,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ### 删除用户
 delete {{url}}/users/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 {{json}}
 
 {
@@ -74,7 +77,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ### 添加商品
 post {{url}}/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
 {{json}}
 
 {
@@ -82,17 +85,37 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
   "price": 100,
   "desc": "商品1描述",
   "status": 1,
-  "hot":true,
+  "hot":false,
   "stock": 100
 }
 
 
 
-### 查询所有商品
-get {{url}}/products?page=1&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+### 分页查询商品
+get {{url}}/products
+    ?page=1
+    &limit=1
+{{auth}}
+
+
+### 查询商品 hot
+get {{url}}/products/hot
+    ?page=1
+    &limit=10
+{{auth}}
+
+
+
+### 查询商品 new
+get {{url}}/products/new
+    ?page=1
+    &limit=10
+{{auth}}
+
 
 
 ### 查询商品详情
 get {{url}}/products/64ae5d734c91a39a13221653
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE0NjA1MX0.evXaj-HjfPdcUvYc5_xdCeYffmrv01L6PSFnO2iGVp0
+{{auth}}
+
+

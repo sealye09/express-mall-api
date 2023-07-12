@@ -1,5 +1,15 @@
 import Product from "../models/Product.js";
 
+const populateProduct = async (product) => {
+  if (!!product.banners && product.banners.length > 0) {
+    await product.populate("banners").execPopulate();
+  }
+  if (!!product.categories && product.categories.length > 0) {
+    await product.populate("categories").execPopulate();
+  }
+  return product;
+};
+
 // 添加商品
 export async function addProduct(req, res) {
   const { ...productData } = req.body;
@@ -42,12 +52,12 @@ export async function updateProduct(req, res) {
 export async function deleteProductsByIds(req, res) {
   const { ids } = req.body;
   try {
-    Product.deleteMany({ _id: { $in: ids } }, (error, products) => {
-      if (error)
-        return res.status(400).json({ code: 400, message: "Error deleting products", data: {} });
-      if (products) {
-        return res.status(200).json({ code: 200, message: "Delete success", data: { products } });
-      }
+    const products = await Product.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      code: 200,
+      message: "Product deleted successfully",
+      data: { products },
     });
   } catch (error) {
     return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
@@ -62,20 +72,30 @@ export async function getProducts(req, res) {
 
   try {
     const total = await Product.countDocuments();
-    const totalPages = Math.ceil(total / limit);
+    const pages = Math.ceil(total / limit);
     const offset = limit * (page - 1);
 
-    const products = await Product.find().skip(offset).limit(limit);
+    let products = await Product.find().skip(offset).limit(limit);
 
-    //     if (!!products.banners && products.banners.length > 0) {
-    //       await products.populate("banners").execPopulate();
-    //     }
-    //
-    //     if (!!products.categories && products.categories.length > 0) {
-    //       await products.populate("categories").execPopulate();
-    //     }
+    if (!products) {
+      return res.status(401).json({
+        code: 401,
+        message: "Invalid product id",
+        data: {},
+      });
+    }
 
-    res.status(200).json({ code: 200, message: "Get success", data: { products } });
+    if (!!products.banners && products.banners.length > 0) {
+      await products.populate("banners").execPopulate();
+    }
+
+    if (!!products.categories && products.categories.length > 0) {
+      await products.populate("categories").execPopulate();
+    }
+
+    res
+      .status(200)
+      .json({ code: 200, message: "Get success", data: { page, pages, total, products } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ code: 500, message: "Internal server error", data: {} });
@@ -85,10 +105,9 @@ export async function getProducts(req, res) {
 // 获取商品详情
 export async function getProductById(req, res) {
   const { id } = req.params;
-  console.log("🚀 ~ file: ProductController.js:88 ~ getProductById ~ id:", id);
 
   try {
-    const product = await Product.findById(id);
+    let product = await Product.findById(id);
     if (!product) {
       return res.status(401).json({
         code: 401,
@@ -97,12 +116,7 @@ export async function getProductById(req, res) {
       });
     }
 
-    if (!!product.banners && product.banners.length > 0) {
-      await product.populate("banners").execPopulate();
-    }
-    if (!!product.categories && product.categories.length > 0) {
-      await product.populate("categories").execPopulate();
-    }
+    product = populateProduct(product);
 
     res.status(200).json({ code: 200, message: "Get success", data: { product } });
   } catch (error) {
@@ -111,41 +125,66 @@ export async function getProductById(req, res) {
   }
 }
 
-// 获取商品列表，hot max 20
+// 获取商品列表，hot
 export async function getProductsByHot(req, res) {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    Product.find({ hot: true })
-      .limit(20)
-      .populate("banners")
-      .populate("categories")
-      .exec((error, products) => {
-        if (error)
-          return res.status(400).json({ code: 400, message: "Error getting products", data: {} });
-        if (products) {
-          return res.status(200).json({ code: 200, message: "Get success", data: { products } });
-        }
+    const total = await Product.countDocuments({ hot: true });
+    const pages = Math.ceil(total / limit);
+    const offset = limit * (page - 1);
+
+    const products = await Product.find({ hot: true }).skip(offset).limit(limit);
+    if (!products) {
+      return res.status(401).json({
+        code: 401,
+        message: "Invalid product id",
+        data: {},
       });
+    }
+    if (!!products.banners && products.banners.length > 0) {
+      await products.populate("banners").execPopulate();
+    }
+    if (!!products.categories && products.categories.length > 0) {
+      await products.populate("categories").execPopulate();
+    }
+
+    res.status(200).json({
+      code: 200,
+      message: "Get success",
+      data: { total, pages, page, products },
+    });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
 // 获取商品列表，按创建时间排序
 export async function getProductsByNew(req, res) {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    Product.find({})
-      .sort({ createdAt: -1 })
-      .limit(20)
-      .populate("banners", "_id img")
-      .populate("categories", "_id name")
-      .exec((error, products) => {
-        if (error)
-          return res.status(400).json({ code: 400, message: "Error getting products", data: {} });
-        if (products) {
-          return res.status(200).json({ code: 200, message: "Get success", data: { products } });
-        }
-      });
+    const total = await Product.countDocuments();
+    const pages = Math.ceil(total / limit);
+    const offset = limit * (page - 1);
+
+    const products = await Product.find().skip(offset).limit(limit).sort({ createdAt: -1 });
+
+    if (!!products.banners && products.banners.length > 0) {
+      await products.populate("banners").execPopulate();
+    }
+    if (!!products.categories && products.categories.length > 0) {
+      await products.populate("categories").execPopulate();
+    }
+
+    res
+      .status(200)
+      .json({ code: 200, message: "Get success", data: { total, pages, page, products } });
   } catch (error) {
-    return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+    console.log(error);
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
