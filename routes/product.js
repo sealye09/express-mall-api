@@ -10,6 +10,7 @@ import {
   getProductById,
   getProductsByHot,
   getProductsByNew,
+  addCategoryToProduct,
 } from "../controllers/ProductController.js";
 
 const router = express.Router();
@@ -29,6 +30,9 @@ router.get("/products/hot", getProductsByHot);
 
 // 获取新品商品
 router.get("/products/new", getProductsByNew);
+
+// 给商品添加分类
+router.post("/products/addCats", authenticateToken, addCategoryToProduct);
 
 // 获取商品详情
 router.get("/products/:id", getProductById);

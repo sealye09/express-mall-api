@@ -119,3 +119,73 @@ get {{url}}/products/64ae5d734c91a39a13221653
 {{auth}}
 
 
+
+### 修改商品
+post {{url}}/products/64ae5d734c91a39a13221653
+{{auth}}
+{{json}}
+
+{
+  "name":"商品1",
+  "price": 100,
+  "desc": "商aaaa",
+  "status": 1,
+  "hot":false,
+  "stock": 100
+}
+
+
+
+### 添加分类
+post {{url}}/categories
+{{auth}}
+{{json}}
+
+{
+  "name":"分类22223",
+  "desc": "分类3描述"
+}
+
+
+
+### 更新分类
+post {{url}}/categories/64afadf798f595908710f64b
+{{auth}}
+{{json}}
+
+{
+  "name":"分类3",
+  "desc": "分333述"
+}
+
+
+### 删除分类
+delete {{url}}/categories/64afb8584411da1438cf973e
+{{auth}}
+
+
+
+### 获取所有分类
+get {{url}}/categories/all
+{{auth}}
+
+
+### 查询分类 分页
+get {{url}}/categories
+    ?page=1
+    &limit=10
+{{auth}}
+
+
+
+### 给商品添加类别
+post {{url}}/products/addCats
+{{auth}}
+{{json}}
+
+{
+  "productId":"64ae676452fb05d51cfe7e5d",
+  "categoryIds":["64afad51e64a2dbf7742dc26","64afad8e2cea8f4c69d13d6d"]
+}
+
+

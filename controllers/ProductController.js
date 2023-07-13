@@ -1,14 +1,5 @@
 import Product from "../models/Product.js";
-
-const populateProduct = async (product) => {
-  if (!!product.banners && product.banners.length > 0) {
-    await product.populate("banners").execPopulate();
-  }
-  if (!!product.categories && product.categories.length > 0) {
-    await product.populate("categories").execPopulate();
-  }
-  return product;
-};
+import Category from "../models/Category.js";
 
 // 添加商品
 export async function addProduct(req, res) {
@@ -25,12 +16,10 @@ export async function addProduct(req, res) {
 
 // 更新商品
 export async function updateProduct(req, res) {
-  const { productId } = req.params;
-  const { productData } = req.body;
+  const { id } = req.params;
+
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(productId, productData, {
-      new: true,
-    });
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
     if (!updatedProduct) {
       return res.status(401).json({
         code: 401,
@@ -116,7 +105,12 @@ export async function getProductById(req, res) {
       });
     }
 
-    product = populateProduct(product);
+    if (!!product.banners && product.banners.length > 0) {
+      await product.populate("banners").execPopulate();
+    }
+    if (!!product.categories && product.categories.length > 0) {
+      await product.populate("categories").execPopulate();
+    }
 
     res.status(200).json({ code: 200, message: "Get success", data: { product } });
   } catch (error) {
@@ -183,6 +177,37 @@ export async function getProductsByNew(req, res) {
     res
       .status(200)
       .json({ code: 200, message: "Get success", data: { total, pages, page, products } });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+  }
+}
+
+// 给商品添加分类(多个分类)
+export async function addCategoryToProduct(req, res) {
+  const { productId, categoryIds } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(401).json({
+        code: 401,
+        message: "Invalid product id",
+        data: {},
+      });
+    }
+
+    // 不能重复添加分类
+    const categories = product.categories;
+    const newCategories = categoryIds.filter((item) => !categories.includes(item));
+    product.categories = [...categories, ...newCategories];
+    await product.save();
+
+    res.status(200).json({
+      code: 200,
+      message: "Add category to product successfully",
+      data: { product },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ code: 500, message: "Internal server error", data: {} });
