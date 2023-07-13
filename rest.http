@@ -189,3 +189,22 @@ post {{url}}/products/addCats
 }
 
 
+### 更新购物车
+post {{url}}/cart/update
+{{auth}}
+{{json}}
+
+{
+  "userId":"64adfcc25d662ba40034c385",
+  "products":[
+    {
+    "_id":"64ae676452fb05d51cfe7e5d",
+    "quantity": 2
+   },
+   {
+    "_id":"64ae5d734c91a39a13221653",
+    "quantity": 1
+   }
+  ]
+}
+

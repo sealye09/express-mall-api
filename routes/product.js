@@ -13,6 +13,8 @@ import {
   addCategoryToProduct,
 } from "../controllers/ProductController.js";
 
+import { addProductToCart } from "../controllers/CartController.js";
+
 const router = express.Router();
 
 // routes
