@@ -1,5 +1,6 @@
 import Product from "../models/Product.js";
 import Category from "../models/Category.js";
+import Banner from "../models/Banner.js";
 
 // 添加商品
 export async function addProduct(req, res) {
@@ -57,14 +58,17 @@ export async function deleteProductsByIds(req, res) {
 export async function getProducts(req, res) {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  console.log("🚀 ~ file: ProductController.js:56 ~ getProducts ~  page, limit:", page, limit);
 
   try {
     const total = await Product.countDocuments();
     const pages = Math.ceil(total / limit);
     const offset = limit * (page - 1);
 
-    let products = await Product.find().skip(offset).limit(limit);
+    let products = await Product.find()
+      .skip(offset)
+      .limit(limit)
+      .populate("banners")
+      .populate("categories");
 
     if (!products) {
       return res.status(401).json({
@@ -72,14 +76,6 @@ export async function getProducts(req, res) {
         message: "Invalid product id",
         data: {},
       });
-    }
-
-    if (!!products.banners && products.banners.length > 0) {
-      await products.populate("banners").execPopulate();
-    }
-
-    if (!!products.categories && products.categories.length > 0) {
-      await products.populate("categories").execPopulate();
     }
 
     res
@@ -96,20 +92,13 @@ export async function getProductById(req, res) {
   const { id } = req.params;
 
   try {
-    let product = await Product.findById(id);
+    let product = await Product.findById(id).populate("banners").populate("categories");
     if (!product) {
       return res.status(401).json({
         code: 401,
         message: "Invalid product id",
         data: {},
       });
-    }
-
-    if (!!product.banners && product.banners.length > 0) {
-      await product.populate("banners").execPopulate();
-    }
-    if (!!product.categories && product.categories.length > 0) {
-      await product.populate("categories").execPopulate();
     }
 
     res.status(200).json({ code: 200, message: "Get success", data: { product } });
@@ -129,19 +118,17 @@ export async function getProductsByHot(req, res) {
     const pages = Math.ceil(total / limit);
     const offset = limit * (page - 1);
 
-    const products = await Product.find({ hot: true }).skip(offset).limit(limit);
+    const products = await Product.find({ hot: true })
+      .skip(offset)
+      .limit(limit)
+      .populate("banners")
+      .populate("categories");
     if (!products) {
       return res.status(401).json({
         code: 401,
         message: "Invalid product id",
         data: {},
       });
-    }
-    if (!!products.banners && products.banners.length > 0) {
-      await products.populate("banners").execPopulate();
-    }
-    if (!!products.categories && products.categories.length > 0) {
-      await products.populate("categories").execPopulate();
     }
 
     res.status(200).json({
@@ -165,14 +152,12 @@ export async function getProductsByNew(req, res) {
     const pages = Math.ceil(total / limit);
     const offset = limit * (page - 1);
 
-    const products = await Product.find().skip(offset).limit(limit).sort({ createdAt: -1 });
-
-    if (!!products.banners && products.banners.length > 0) {
-      await products.populate("banners").execPopulate();
-    }
-    if (!!products.categories && products.categories.length > 0) {
-      await products.populate("categories").execPopulate();
-    }
+    const products = await Product.find()
+      .skip(offset)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate("banners")
+      .populate("categories");
 
     res
       .status(200)

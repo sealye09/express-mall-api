@@ -1,7 +1,7 @@
 @url=http://localhost:3003/api
 @json=Content-Type: application/json
 
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTE1MTI0MX0.A9dfuiUj9u7yS3NFLcTvPE3Z9cK2oT6OLNgp0xxr16c
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTI1MzI3OX0.OYzbYHKqGj0nmHjM2mLs8UsdqGx-FTe-qhQNvqTKIk4
 
 @auth=Authorization: {{token}}
 
@@ -37,7 +37,7 @@ post {{url}}/login
 
 
 ### 个人信息
-get {{url}}/users/64adfcc25d662ba40034c385
+get {{url}}/users/64aff59b0861e50d839ba7f4
 {{auth}}
 
 
@@ -47,7 +47,7 @@ post {{url}}/users/update
 {{json}}
 
 {
-  "id":"64adfcc25d662ba40034c385",
+  "id":"64aff59b0861e50d839ba7f4",
   "nickname": "aaaaa"
 }
 
@@ -58,7 +58,7 @@ post {{url}}/users/updatePassword
 {{json}}
 
 {
-  "id":"64adfcc25d662ba40034c385",
+  "id":"64aff59b0861e50d839ba7f4",
   "oldPassword": "qqqq",
   "newPassword": "admin"
 }
@@ -70,7 +70,7 @@ delete {{url}}/users/delete
 {{json}}
 
 {
-  "id":["64adfcc25d662ba40034c385"]
+  "id":["64aff59b0861e50d839ba7f4"]
 }
 
 
@@ -115,13 +115,13 @@ get {{url}}/products/new
 
 
 ### 查询商品详情
-get {{url}}/products/64ae5d734c91a39a13221653
+get {{url}}/products/64aff5d5713fc9c9399ebe7c
 {{auth}}
 
 
 
 ### 修改商品
-post {{url}}/products/64ae5d734c91a39a13221653
+post {{url}}/products/64aff5d5713fc9c9399ebe7c
 {{auth}}
 {{json}}
 
@@ -142,7 +142,7 @@ post {{url}}/categories
 {{json}}
 
 {
-  "name":"分类22223",
+  "name":"分aa23",
   "desc": "分类3描述"
 }
 
@@ -184,8 +184,8 @@ post {{url}}/products/addCats
 {{json}}
 
 {
-  "productId":"64ae676452fb05d51cfe7e5d",
-  "categoryIds":["64afad51e64a2dbf7742dc26","64afad8e2cea8f4c69d13d6d"]
+  "productId":"64aff5d5713fc9c9399ebe7c",
+  "categoryIds":["64aff5ed713fc9c9399ebe7e","64aff5f3713fc9c9399ebe80"]
 }
 
 
@@ -195,14 +195,14 @@ post {{url}}/cart/update
 {{json}}
 
 {
-  "userId":"64adfcc25d662ba40034c385",
+  "userId":"64aff59b0861e50d839ba7f4",
   "products":[
     {
     "_id":"64ae676452fb05d51cfe7e5d",
     "quantity": 2
    },
    {
-    "_id":"64ae5d734c91a39a13221653",
+    "_id":"64aff5d5713fc9c9399ebe7c",
     "quantity": 1
    }
   ]

@@ -1,4 +1,5 @@
 import Category from "../models/Category.js";
+import Product from "../models/Product.js";
 
 // 添加分类
 export async function createCategory(req, res) {

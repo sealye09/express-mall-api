@@ -9,7 +9,7 @@ const BannerSchema = new mongoose.Schema({
   status: { type: Boolean },
 });
 
-const Category = mongoose.model("Category", BannerSchema);
+const Banner = mongoose.model("Banner", BannerSchema);
 
 
-export default Category;
+export default Banner;
