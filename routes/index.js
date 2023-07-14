@@ -6,6 +6,7 @@ import UserRoutes from "./user.js";
 import ProductRoutes from "./product.js";
 import CategoryRoutes from "./category.js";
 import CartRoutes from "./cart.js";
+import UploadRoutes from "./upload.js";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.use("/api", UserRoutes);
 router.use("/api", ProductRoutes);
 router.use("/api", CategoryRoutes);
 router.use("/api", CartRoutes);
+router.use("/api", UploadRoutes);
 
 export default router;

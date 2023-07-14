@@ -11,7 +11,7 @@ import { dbConnext } from "./config/db.js";
 
 // routes import
 import routes from "./routes/index.js";
-import User from './models/User.js';
+import User from "./models/User.js";
 
 /* 配置 */
 dotenv.config();
