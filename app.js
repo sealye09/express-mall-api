@@ -18,7 +18,7 @@ const app = express();
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 // 将 public 目录设置为静态资源目录
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
