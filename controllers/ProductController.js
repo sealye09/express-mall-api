@@ -10,6 +10,7 @@ export async function addProduct(req, res) {
     const product = await Product.create(productData);
     res.status(200).json({ code: 200, message: "Create success", data: { product } });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
@@ -17,9 +18,10 @@ export async function addProduct(req, res) {
 // 更新商品
 export async function updateProduct(req, res) {
   const { id } = req.params;
+  const { ...productData } = req.body;
 
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedProduct = await Product.findByIdAndUpdate(id, productData, { new: true });
     if (!updatedProduct) {
       return res.status(401).json({
         code: 401,
