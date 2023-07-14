@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema(
     stock: { type: Number },
     desc: { type: String },
     cover: { type: String },
-    banners: [{ type: mongoose.Schema.Types.ObjectId, ref: "Banner" }],
+    banners: [{ type: String }],
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     status: { type: Boolean },
     hot: { type: Boolean, default: false },

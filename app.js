@@ -11,13 +11,14 @@ import { dbConnext } from "./config/db.js";
 
 // routes import
 import routes from "./routes/index.js";
-import User from "./models/User.js";
 
 /* 配置 */
 dotenv.config();
 const app = express();
 const swaggerDocument = YAML.load("./swagger.yaml");
 
+// 将 public 目录设置为静态资源目录
+app.use(express.static('public'));
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));

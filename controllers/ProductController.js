@@ -18,6 +18,7 @@ export async function addProduct(req, res) {
 // 更新商品
 export async function updateProduct(req, res) {
   const { id } = req.params;
+  console.log("🚀 ~ file: ProductController.js:24 ~ updateProduct ~ req.body:", req.body);
 
   try {
     const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
@@ -34,6 +35,7 @@ export async function updateProduct(req, res) {
       data: { product: updatedProduct },
     });
   } catch (error) {
+    console.log("🚀 ~ file: ProductController.js:38 ~ updateProduct ~ error:", error);
     return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
