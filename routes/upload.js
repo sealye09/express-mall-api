@@ -24,7 +24,6 @@ const router = express.Router();
 router.post("/upload", upload.single("file"), (req, res) => {
   // 获取上传的文件信息
   const file = req.file;
-  console.log("🚀 ~ file: upload.js:27 ~ router.post ~ req:", req);
 
   if (!file) {
     return res.status(400).json({ code: 400, message: "No file uploaded", data: {} });
@@ -34,13 +33,11 @@ router.post("/upload", upload.single("file"), (req, res) => {
   const fileUrl = req.protocol + "://" + req.get("host") + "/uploads/" + file.filename;
 
   // 文件上传成功，返回文件的 URL
-  res
-    .status(200)
-    .json({
-      code: 200,
-      message: "File Uploaded Successfully",
-      data: { name: file.filename, url: fileUrl },
-    });
+  res.status(200).json({
+    code: 200,
+    message: "File Uploaded Successfully",
+    data: { name: file.filename, url: fileUrl },
+  });
 });
 
 export default router;

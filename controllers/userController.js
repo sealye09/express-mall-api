@@ -63,9 +63,7 @@ export async function login(req, res) {
 // 分页查询用户列表
 export async function getUsers(req, res) {
   const page = parseInt(req.query.page) || 1; // 当前页码，默认为第一页
-  console.log("🚀 ~ file: userController.js:66 ~ getUsers ~ page:", page);
   const limit = parseInt(req.query.limit) || 10; // 每页显示的用户数量，默认为10个
-  console.log("🚀 ~ file: userController.js:68 ~ getUsers ~ limit:", limit);
 
   try {
     const totalUsers = await User.countDocuments(); // 获取用户总数
