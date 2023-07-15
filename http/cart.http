@@ -8,16 +8,41 @@
 
 
 ### 获取购物车列表
-get {{url}}/cart/64aff59b0861e50d839ba7f4
+get {{url}}/cart/64b2372bcdfa8c730d2566d2
 {{auth}}
 
 
 ### 添加购物车
-post {{url}}/cart/64aff59b0861e50d839ba7f4
+post {{url}}/cart/64b2372bcdfa8c730d2566d2
 {{auth}}
 {{json}}
 
 {
-"productId": "64b1580c89d94eb38172117b",
+"productId": "64b23bd6cdfa8c730d256724",
 "quantity": "1"
+}
+
+
+
+### 从购物车移除
+delete {{url}}/cart
+{{auth}}
+{{json}}
+
+{
+"productId": "64b23bd6cdfa8c730d256724",
+"userId": "64b2372bcdfa8c730d2566d2"
+}
+
+
+
+### 更新购物车商品数量
+put {{url}}/cart
+{{auth}}
+{{json}}
+
+{
+	"userId":"64b2372bcdfa8c730d2566d2",
+	"productId": "64b23bd6cdfa8c730d256724",
+	"quantity": "222"
 }

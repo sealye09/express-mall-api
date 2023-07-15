@@ -5,6 +5,7 @@ import User from "../models/User.js";
 export async function addProductToCart(req, res) {
   const { id } = req.params;
   const { productId, quantity } = req.body;
+  console.log("🚀 ~ file: CartController.js:8 ~ addProductToCart ~ productId:", productId);
 
   try {
     // 检查用户是否存在
@@ -20,14 +21,15 @@ export async function addProductToCart(req, res) {
     }
 
     // 检查购物车中是否已存在该商品
-    const cartItem = user.cart.find((item) => item.productId === productId);
+    const cartItem = user.cart.find((item) => item.product.toString() === productId);
+    console.log("🚀 ~ file: CartController.js:25 ~ addProductToCart ~ cartItem:", cartItem);
 
     if (cartItem) {
       // 商品已存在，增加数量
-      cartItem.quantity += quantity;
+      cartItem.quantity += Number(quantity);
     } else {
       // 商品不存在，创建新的购物车项
-      user.cart.push({ productId, quantity });
+      user.cart.push({ product: productId, quantity });
     }
 
     // 保存用户信息
@@ -45,7 +47,7 @@ export async function removeProductFromCart(req, res) {
   const { userId, productId } = req.body;
 
   try {
-    let user = await User.findById(userId);
+    let user = await User.findById(userId).populate("cart.product").exec();
     if (!user) {
       return res.status(401).json({
         code: 401,
@@ -54,13 +56,16 @@ export async function removeProductFromCart(req, res) {
       });
     }
 
-    user.cart = user.cart.filter((product) => product.productId !== productId);
+    const updatedCart = user.cart.filter((item) => item.product._id.toString() !== productId);
+
+    user.cart = updatedCart;
     await user.save();
+    const cart = user.cart;
 
     res.status(200).json({
       code: 200,
       message: "Remove product from cart successfully",
-      data: { user },
+      data: { cart },
     });
   } catch (error) {
     console.log(error);
@@ -75,7 +80,6 @@ export async function getCartProducts(req, res) {
   try {
     let user = await User.findById(id).populate("cart.product").exec();
     if (!user) {
-      console.log("🚀 ~ file: CartController.js:69 ~ getCartProducts ~ user:", user);
       return res.status(401).json({
         code: 401,
         message: "Invalid user id",
@@ -88,7 +92,7 @@ export async function getCartProducts(req, res) {
     res.status(200).json({
       code: 200,
       message: "Get cart products successfully",
-      data: { user },
+      data: { cart },
     });
   } catch (error) {
     console.log(error);
@@ -110,8 +114,16 @@ export async function updateCartProductQuantity(req, res) {
       });
     }
 
-    const product = user.cart.find((product) => product.productId === productId);
-    product.quantity = quantity;
+    const cartItem = user.cart.find((item) => item.product.toString() === productId);
+    if (!cartItem) {
+      return res.status(404).json({
+        code: 404,
+        message: "Product not found in cart",
+        data: {},
+      });
+    }
+
+    cartItem.quantity = quantity;
     await user.save();
 
     res.status(200).json({
