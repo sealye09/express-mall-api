@@ -6,10 +6,9 @@ const BannerSchema = new mongoose.Schema({
   url: { type: String },
   rank: { type: Number },
   desc: { type: String },
-  status: { type: Boolean },
+  status: { type: Boolean, default: true },
 });
 
 const Banner = mongoose.model("Banner", BannerSchema);
-
 
 export default Banner;
