@@ -15,6 +15,21 @@ export async function getBanners(req, res) {
   }
 }
 
+// 获取所有轮播图
+export async function getAllBanners(req, res) {
+  try {
+    const banners = await Banner.find();
+    res.status(200).json({
+      code: 200,
+      message: "Banner fetched successfully",
+      data: { banners },
+    });
+  } catch (error) {
+    console.error("Error getting banner:", error);
+    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+  }
+}
+
 // 添加轮播图
 export async function addBanner(req, res) {
   const { title, image, url, rank, desc } = req.body;
