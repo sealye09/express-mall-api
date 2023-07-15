@@ -24,6 +24,18 @@ export async function getOrders(req, res) {
   }
 }
 
+// 获取用户的订单
+export async function getUserOrders(req, res) {
+  const { id } = req.params;
+  try {
+    const orders = await Order.findById(id);
+    return res.status(200).json({ code: 200, message: "获取用户订单成功", data: orders });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ code: 500, message: "服务端错误", data: {} });
+  }
+}
+
 // 获取单个订单
 export async function getOrder(req, res) {
   const { id } = req.params;
