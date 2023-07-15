@@ -6,8 +6,15 @@ import {
   getUserInfo,
   updateUser,
   updatePassword,
-  deleteUserByIds
+  deleteUserByIds,
 } from "../controllers/UserController.js";
+import {
+  updateUserAddress,
+  updateUserDefaultAddress,
+  getUserAddress,
+  addUserAddress,
+  deleteAddress,
+} from "../controllers/AddressController.js";
 
 // 中间件
 import authenticateToken from "../middleware/auth.js";
@@ -34,5 +41,20 @@ router.post("/users/update", authenticateToken, updateUser);
 
 // 删除用户
 router.post("/users/delete", authenticateToken, deleteUserByIds);
+
+// 添加用户地址
+router.post("/users/address", authenticateToken, addUserAddress);
+
+// 获取用户地址
+router.get("/users/address/:id", authenticateToken, getUserAddress);
+
+// 修改用户地址
+router.post("/users/address/update", authenticateToken, updateUserAddress);
+
+// 修改用户默认地址
+router.post("/users/address/default", authenticateToken, updateUserDefaultAddress);
+
+// 删除用户地址
+router.delete("/users/address/delete", authenticateToken, deleteAddress);
 
 export default router;

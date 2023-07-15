@@ -72,3 +72,58 @@ delete {{url}}/users/delete
 {
   "id":["64aff59b0861e50d839ba7f4"]
 }
+
+
+
+### 查询用户地址
+get {{url}}/users/address/64b2372bcdfa8c730d2566d2
+{{auth}}
+
+
+### 添加用户地址
+post {{url}}/users/address
+{{auth}}
+{{json}}
+
+{
+  "id":"64b2372bcdfa8c730d2566d2",
+  "detail": "北京市海淀区"
+}
+
+
+### 修改用户地址
+post {{url}}/users/address/update
+{{auth}}
+{{json}}
+
+{
+  "id":"64b2372bcdfa8c730d2566d2",
+  "address": {
+    "id":"64b2a4d6a81d1e593d88f1e9",
+    "detail" :"aaaa"
+  }
+}
+
+
+### 修改用户默认地址
+post {{url}}/users/address/default
+{{auth}}
+{{json}}
+
+{
+  "id": "64b2372bcdfa8c730d2566d2",
+  "addressId": "64b2a4d6a81d1e593d88f1e9"
+}
+
+### 删除用户地址
+delete {{url}}/users/address/delete
+{{auth}}
+{{json}}
+
+{
+  "id": "64b2372bcdfa8c730d2566d2",
+  "addressId": "64b2a4d6a81d1e593d88f1e9"
+}
+
+
+

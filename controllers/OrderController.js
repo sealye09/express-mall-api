@@ -1,11 +1,26 @@
 import Order from "../models/Order.js";
+import User from "../models/User.js";
 
 // 添加订单
 export async function createOrder(req, res) {
-  const { ...orderData } = req.body;
+  let { userId, products, address } = req.body;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(401).json({ code: 401, message: "用户不存在", data: {} });
+  }
+
+  const price = products.reduce((sum, product) => {
+    return sum + Number(product.price) * Number(product.quantity);
+  }, 0);
+  
+  if (!address) {
+    address = user.default_address;
+  }
 
   try {
-    const order = await Order.create(req.body);
+    const order = await Order.create({ user: userId, products, address, price, status: true });
     return res.status(200).json({ code: 200, message: "订单添加成功", data: order });
   } catch (error) {
     console.log(error);
@@ -80,22 +95,6 @@ export async function deleteOrder(req, res) {
     }
     await Order.findByIdAndDelete(id);
     return res.status(200).json({ code: 200, message: "删除订单成功", data: {} });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ code: 500, message: "服务端错误", data: {} });
-  }
-}
-
-// 获取订单下的商品
-export async function getOrderProducts(req, res) {
-  const { id } = req.params;
-
-  try {
-    const order = await Order.findById(id).populate("products");
-    if (!order) {
-      return res.status(404).json({ code: 404, message: "订单不存在", data: {} });
-    }
-    return res.status(200).json({ code: 200, message: "获取订单商品成功", data: order.products });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ code: 500, message: "服务端错误", data: {} });

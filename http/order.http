@@ -4,3 +4,44 @@
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTQwMTEzN30.UmsqnbcGdaiOBufkY5izQrvi-Y6wYDLjvNHE2ucDDvw
 
 @auth=Authorization: {{token}}
+
+
+
+### 添加订单
+post {{url}}/orders
+{{auth}}
+{{json}}
+
+{
+
+}
+
+
+
+### 获取所有订单
+get {{url}}/orders/all
+{{auth}}
+
+
+### 获取用户订单列表
+get {{url}}/orders/user/:id
+{{auth}}
+
+
+### 获取订单详情
+get {{url}}/orders/:id
+{{auth}}
+
+
+### 取消订单
+post {{url}}/orders
+{{auth}}
+{{json}}
+{
+	"id": 1
+}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+### 删除订单
+delete {{url}}/order/
+{{auth}}

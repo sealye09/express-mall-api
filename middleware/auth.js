@@ -10,7 +10,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 function authenticateToken(req, res, next) {
   let token = req.headers.authorization;
 
-  console.log(token);
   if (token) {
     token = token.split(" ").pop();
     jwt.verify(token, JWT_SECRET, (err, decoded) => {

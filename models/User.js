@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
     avatar: { type: String, default: "" },
     gender: { type: String, default: "" },
     role: { type: String, default: "user" },
+    default_address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
     cart: [
       {

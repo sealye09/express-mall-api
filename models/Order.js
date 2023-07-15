@@ -4,12 +4,11 @@ const OrderSchema = new mongoose.Schema(
   {
     status: { type: String },
     price: { type: Number },
-    payTime: { type: Date },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
     products: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: { type: Number },
       },
     ],
