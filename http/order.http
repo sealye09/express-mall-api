@@ -1,0 +1,6 @@
+@url=http://localhost:3003/api
+@json=Content-Type: application/json
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTI1MzI3OX0.OYzbYHKqGj0nmHjM2mLs8UsdqGx-FTe-qhQNvqTKIk4
+
+@auth=Authorization: {{token}}

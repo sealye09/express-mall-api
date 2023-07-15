@@ -3,29 +3,39 @@ import User from "../models/User.js";
 
 // 添加商品到购物车
 export async function addProductToCart(req, res) {
-  const { userId, products } = req.body;
+  const { id } = req.params;
+  const { productId, quantity } = req.body;
 
   try {
-    let user = await User.findById(userId);
+    // 检查用户是否存在
+    const user = await User.findById(id);
     if (!user) {
-      return res.status(401).json({
-        code: 401,
-        message: "Invalid user id",
-        data: {},
-      });
+      return res.status(401).json({ code: 401, message: "User not found", data: {} });
     }
 
-    // product 的 productId 为 _id
-    user.cart = products;
+    // 检查商品是否存在
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(401).json({ code: 401, message: "Product not found", data: {} });
+    }
+
+    // 检查购物车中是否已存在该商品
+    const cartItem = user.cart.find((item) => item.productId === productId);
+
+    if (cartItem) {
+      // 商品已存在，增加数量
+      cartItem.quantity += quantity;
+    } else {
+      // 商品不存在，创建新的购物车项
+      user.cart.push({ productId, quantity });
+    }
+
+    // 保存用户信息
     await user.save();
 
-    res.status(200).json({
-      code: 200,
-      message: "Add product to cart successfully",
-      data: { user },
-    });
+    res.status(200).json({ code: 200, message: "Product added to cart successfully", data: {} });
   } catch (error) {
-    console.log(error);
+    console.error("Error adding product to cart:", error);
     res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
@@ -60,11 +70,12 @@ export async function removeProductFromCart(req, res) {
 
 // 获取购物车商品
 export async function getCartProducts(req, res) {
-  const { userId } = req.body;
+  const { id } = req.params;
 
   try {
-    let user = await User.findById(userId);
+    let user = await User.findById(id).populate("cart.product").exec();
     if (!user) {
+      console.log("🚀 ~ file: CartController.js:69 ~ getCartProducts ~ user:", user);
       return res.status(401).json({
         code: 401,
         message: "Invalid user id",
@@ -72,14 +83,12 @@ export async function getCartProducts(req, res) {
       });
     }
 
-    const products = await Product.find({
-      _id: { $in: user.cart.map((product) => product.productId) },
-    });
+    const cart = user.cart;
 
     res.status(200).json({
       code: 200,
       message: "Get cart products successfully",
-      data: { products },
+      data: { user },
     });
   } catch (error) {
     console.log(error);

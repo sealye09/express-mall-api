@@ -1,0 +1,73 @@
+@url=http://localhost:3003/api
+@json=Content-Type: application/json
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTI1MzI3OX0.OYzbYHKqGj0nmHjM2mLs8UsdqGx-FTe-qhQNvqTKIk4
+
+@auth=Authorization: {{token}}
+
+
+### 添加商品
+post {{url}}/products
+{{auth}}
+{{json}}
+
+{
+  "name":"商品1",
+  "price": 100,
+  "desc": "商品1描述",
+  "status": 1,
+  "hot":false,
+  "stock": 100
+}
+
+
+### 分页查询商品
+get {{url}}/products
+    ?page=1
+    &limit=1
+{{auth}}
+
+
+### 查询商品 hot
+get {{url}}/products/hot
+    ?page=1
+    &limit=10
+{{auth}}
+
+
+### 查询商品 new
+get {{url}}/products/new
+    ?page=1
+    &limit=10
+{{auth}}
+
+
+### 查询商品详情
+get {{url}}/products/64aff5d5713fc9c9399ebe7c
+{{auth}}
+
+
+### 修改商品
+post {{url}}/products/64aff5d5713fc9c9399ebe7c
+{{auth}}
+{{json}}
+
+{
+  "name":"商品1",
+  "price": 100,
+  "desc": "商aaaa",
+  "status": 1,
+  "hot":false,
+  "stock": 100
+}
+
+
+### 给商品添加类别
+post {{url}}/products/addCats
+{{auth}}
+{{json}}
+
+{
+  "productId":"64aff5d5713fc9c9399ebe7c",
+  "categoryIds":["64aff5ed713fc9c9399ebe7e","64aff5f3713fc9c9399ebe80"]
+}

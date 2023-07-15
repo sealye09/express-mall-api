@@ -85,3 +85,19 @@ export async function deleteOrder(req, res) {
     return res.status(500).json({ code: 500, message: "服务端错误", data: {} });
   }
 }
+
+// 获取订单下的商品
+export async function getOrderProducts(req, res) {
+  const { id } = req.params;
+
+  try {
+    const order = await Order.findById(id).populate("products");
+    if (!order) {
+      return res.status(404).json({ code: 404, message: "订单不存在", data: {} });
+    }
+    return res.status(200).json({ code: 200, message: "获取订单商品成功", data: order.products });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ code: 500, message: "服务端错误", data: {} });
+  }
+}

@@ -1,0 +1,23 @@
+@url=http://localhost:3003/api
+@json=Content-Type: application/json
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTM4NTY2MX0.pjC353YhMdZ2FiullXVe8VYeFNLQgbbnSoE8V5EJU2I
+
+@auth=Authorization: {{token}}
+
+
+
+### 获取购物车列表
+get {{url}}/cart/64aff59b0861e50d839ba7f4
+{{auth}}
+
+
+### 添加购物车
+post {{url}}/cart/64aff59b0861e50d839ba7f4
+{{auth}}
+{{json}}
+
+{
+"productId": "64b1580c89d94eb38172117b",
+"quantity": "1"
+}

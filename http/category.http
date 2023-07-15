@@ -1,0 +1,50 @@
+@url=http://localhost:3003/api
+@json=Content-Type: application/json
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTI1MzI3OX0.OYzbYHKqGj0nmHjM2mLs8UsdqGx-FTe-qhQNvqTKIk4
+
+@auth=Authorization: {{token}}
+
+
+### 添加分类
+post {{url}}/categories
+{{auth}}
+{{json}}
+
+{
+  "name":"分aa23",
+  "desc": "分类3描述"
+}
+
+
+### 更新分类
+post {{url}}/categories/64afadf798f595908710f64b
+{{auth}}
+{{json}}
+
+{
+  "name":"分类3",
+  "desc": "分333述"
+}
+
+
+### 删除分类
+delete {{url}}/categories/64afb8584411da1438cf973e
+{{auth}}
+
+
+### 获取所有分类
+get {{url}}/categories/all
+{{auth}}
+
+
+### 查询分类 分页
+get {{url}}/categories
+    ?page=1
+    &limit=10
+{{auth}}
+
+
+### 获取分类下的商品
+get {{url}}/categories/64afb8584411da1438cf973e/products
+{{auth}}

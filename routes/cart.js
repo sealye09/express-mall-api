@@ -10,11 +10,11 @@ import {
 
 const router = express.Router();
 
-// 获取购物车商品
-router.get("/cart", authenticateToken, getCartProducts);
+// 获取购物车商品 id用户id
+router.get("/cart/:id", authenticateToken, getCartProducts);
 
 // 添加到购物车
-router.post("/cart", authenticateToken, addProductToCart);
+router.post("/cart/:id", authenticateToken, addProductToCart);
 
 // 从购物车移除
 router.delete("/cart", authenticateToken, removeProductFromCart);

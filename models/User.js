@@ -12,13 +12,13 @@ const UserSchema = new mongoose.Schema(
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
     cart: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: { type: Number },
       },
     ],
     orders: [
       {
-        orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
+        order: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
       },
     ],
   },
