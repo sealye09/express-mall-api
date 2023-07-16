@@ -4,3 +4,48 @@
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTQwMTEzN30.UmsqnbcGdaiOBufkY5izQrvi-Y6wYDLjvNHE2ucDDvw
 
 @auth=Authorization: {{token}}
+
+
+### 获取所有轮播图
+GET {{url}}/banners/all
+	?page=1
+	&limit=10
+{{auth}}
+
+
+### 添加轮播图
+POST {{url}}/banners
+{{auth}}
+{{json}}
+
+{
+	"title": "轮播图1",
+	"rank": 1,
+	"status": true
+}
+
+
+
+### 删除轮播图
+DELETE {{url}}/banners
+{{auth}}
+{{json}}
+
+{
+	"id": "64b3a27f88f22e2c2c29e138"
+}
+
+
+
+### 修改轮播图
+PUT {{url}}/banners
+{{auth}}
+{{json}}
+
+{
+	"id": "64b3a39175a99b1951bdb7e6",
+	"title": "轮播图22",
+	"rank": 2,
+	"status": true,
+	"desc": "轮播图22"
+}
