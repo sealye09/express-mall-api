@@ -58,10 +58,17 @@ export async function createOrder(req, res) {
   }
 }
 
-// 获取所有订单
+// 获取所有订单(分页)
 export async function getOrders(req, res) {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10; // 每页显示的订单数量，默认为10个
+
   try {
-    const orders = await Order.find();
+    const total = await Order.countDocuments(); // 获取订单总数
+    const pages = Math.ceil(total / limit); // 总页数
+    const offset = (page - 1) * limit; // 查询偏移量
+
+    const orders = await Order.find().sort({ createdAt: -1 }).skip(offset).limit(limit).populate("products.product");
     return res.status(200).json({ code: 200, message: "获取所有订单成功", data: orders });
   } catch (error) {
     console.log(error);
@@ -153,14 +160,14 @@ export async function deleteOrder(req, res) {
     if (!order) {
       return res.status(404).json({ code: 404, message: "订单不存在", data: {} });
     }
-    
+
     // 删除订单后，删除用户的订单
     const index = user.orders.indexOf(orderId);
     if (index > -1) {
       user.orders.splice(index, 1);
     }
     await user.save();
-  
+
     return res.status(200).json({ code: 200, message: "订单删除成功", data: { order } });
   } catch (error) {
     console.log(error);
