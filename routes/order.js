@@ -1,31 +1,37 @@
 import express from "express";
+import authenticateToken from "../middleware/auth.js";
+
 import {
   createOrder,
   getOrders,
   getUserOrders,
   getOrder,
-  updateOrder,
+  cancelOrder,
   deleteOrder,
+  getUserCanceledOrders,
 } from "../controllers/OrderController.js";
 
 const router = express.Router();
 
-// 添加订单
-router.post("/orders", createOrder);
-
 // 获取所有订单
-router.get("/orders/all", getOrders);
+router.get("/orders/all", authenticateToken, getOrders);
 
 // 获取用户的所有订单
-router.get("/orders/user/:id", getUserOrders);
+router.get("/orders/user/:id", authenticateToken, getUserOrders);
+
+// 添加订单
+router.post("/orders", authenticateToken, createOrder);
 
 // 获取订单详情
-router.get("/orders/:id", getOrder);
+router.get("/orders/:id", authenticateToken, getOrder);
 
-// 更新订单
-router.post("/orders/:id", updateOrder);
+// 取消订单
+router.post("/orders/cancel", authenticateToken, cancelOrder);
+
+// 获取用户的订单(已取消)
+router.get("/orders/canceled/:id", authenticateToken, getUserCanceledOrders);
 
 // 删除订单
-router.delete("/orders/:id", deleteOrder);
+router.post("/orders/delete", authenticateToken, deleteOrder);
 
 export default router;

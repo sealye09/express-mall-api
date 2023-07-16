@@ -13,7 +13,16 @@ post {{url}}/orders
 {{json}}
 
 {
-
+"userId":"64b2372bcdfa8c730d2566d2",
+"products":[{
+	"productId":"64b23bd6cdfa8c730d256724",
+	"quantity":1
+},
+{
+	"productId":"64b23bd7cdfa8c730d256726",
+	"quantity":2
+}],
+"address":""
 }
 
 
@@ -24,24 +33,37 @@ get {{url}}/orders/all
 
 
 ### 获取用户订单列表
-get {{url}}/orders/user/:id
+get {{url}}/orders/user/64b2372bcdfa8c730d2566d2
+{{auth}}
+
+
+### 获取用户订单列表（取消）
+get {{url}}/orders/canceled/64b2372bcdfa8c730d2566d2
 {{auth}}
 
 
 ### 获取订单详情
-get {{url}}/orders/:id
+get {{url}}/orders/64b3571e71fb64c7ab15c483
 {{auth}}
 
 
 ### 取消订单
-post {{url}}/orders
+post {{url}}/orders/cancel
 {{auth}}
 {{json}}
+
 {
-	"id": 1
+"userId":"64b2372bcdfa8c730d2566d2",
+"orderId": "64b3572871fb64c7ab15c48b"
 }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
 ### 删除订单
-delete {{url}}/order/
+post {{url}}/orders/delete
 {{auth}}
+{{json}}
+
+{
+"userId":"64b2372bcdfa8c730d2566d2",
+"orderId": "64b3571e71fb64c7ab15c483"
+}

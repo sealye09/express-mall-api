@@ -1,4 +1,6 @@
 import express from "express";
+import authenticateToken from "../middleware/auth.js";
+
 import {
   createCategory,
   getCategories,
@@ -24,12 +26,12 @@ router.get("/categories/:id", getCategory);
 router.get("/categories/:id/products", getCategoryProducts);
 
 // 创建分类
-router.post("/categories", createCategory);
+router.post("/categories", authenticateToken, createCategory);
 
 // 更新分类
-router.post("/categories/:id", updateCategory);
+router.post("/categories/:id", authenticateToken, updateCategory);
 
 // 删除分类
-router.delete("/categories/:id", deleteCategory);
+router.delete("/categories/:id", authenticateToken, deleteCategory);
 
 export default router;
