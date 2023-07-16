@@ -49,14 +49,15 @@ get {{url}}/orders/64b3571e71fb64c7ab15c483
 {{auth}}
 
 
-### 取消订单
-post {{url}}/orders/cancel
+### 更新订单状态
+post {{url}}/orders/update
 {{auth}}
 {{json}}
 
 {
 "userId":"64b2372bcdfa8c730d2566d2",
-"orderId": "64b3572871fb64c7ab15c48b"
+"orderId": "64b371395cdda09927e82174",
+"status": "已支付"
 }
 
 

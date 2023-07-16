@@ -45,7 +45,7 @@ export async function createOrder(req, res) {
       products: validProducts,
       address: address || user.default_address,
       price,
-      status: true,
+      status: "待支付",
     });
 
     user.orders.push(order._id);
@@ -68,8 +68,15 @@ export async function getOrders(req, res) {
     const pages = Math.ceil(total / limit); // 总页数
     const offset = (page - 1) * limit; // 查询偏移量
 
-    const orders = await Order.find().sort({ createdAt: -1 }).skip(offset).limit(limit).populate("products.product");
-    return res.status(200).json({ code: 200, message: "获取所有订单成功", data: orders });
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit)
+      .populate("products.product")
+      .populate("user");
+    return res
+      .status(200)
+      .json({ code: 200, message: "获取所有订单成功", data: { page, pages, total, orders } });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ code: 500, message: "服务端错误", data: {} });
@@ -127,9 +134,17 @@ export async function getOrder(req, res) {
   }
 }
 
-// 取消订单
-export async function cancelOrder(req, res) {
-  const { userId, orderId } = req.body;
+// 更新订单状态
+// 待支付，已支付，已发货，已完成，已取消
+export async function updateOrderStatus(req, res) {
+  const constStatus = ["待支付", "已支付", "已发货", "已完成", "已取消"];
+  const { userId, orderId, status } = req.body;
+  if (!status) {
+    return res.status(400).json({ code: 400, message: "状态不能为空", data: {} });
+  }
+  if (!constStatus.includes(status)) {
+    return res.status(400).json({ code: 400, message: "状态不正确", data: {} });
+  }
   try {
     const user = await User.findById(userId);
     if (!user) {
@@ -139,7 +154,7 @@ export async function cancelOrder(req, res) {
     if (!order) {
       return res.status(404).json({ code: 404, message: "订单不存在", data: {} });
     }
-    order.status = false;
+    order.status = status;
     await order.save();
     return res.status(200).json({ code: 200, message: "取消订单成功", data: { order } });
   } catch (error) {

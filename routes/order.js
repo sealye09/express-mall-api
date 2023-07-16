@@ -6,7 +6,7 @@ import {
   getOrders,
   getUserOrders,
   getOrder,
-  cancelOrder,
+  updateOrderStatus,
   deleteOrder,
   getUserCanceledOrders,
 } from "../controllers/OrderController.js";
@@ -25,8 +25,8 @@ router.post("/orders", authenticateToken, createOrder);
 // 获取订单详情
 router.get("/orders/:id", authenticateToken, getOrder);
 
-// 取消订单
-router.post("/orders/cancel", authenticateToken, cancelOrder);
+// 更新订单状态
+router.post("/orders/update", authenticateToken, updateOrderStatus);
 
 // 获取用户的订单(已取消)
 router.get("/orders/canceled/:id", authenticateToken, getUserCanceledOrders);
