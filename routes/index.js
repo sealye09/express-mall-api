@@ -19,6 +19,7 @@ router.use("/api", ProductRoutes);
 router.use("/api", CategoryRoutes);
 router.use("/api", CartRoutes);
 router.use("/api", OrderRoutes);
+router.use("/api", BannerRoutes);
 
 router.use("/api", UploadRoutes);
 

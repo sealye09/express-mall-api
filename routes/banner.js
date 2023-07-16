@@ -12,18 +12,18 @@ import {
 const router = express.Router();
 
 // 轮播图
-router.get("/api/banners", getBanners);
+router.get("/banners", getBanners);
 
 // 获取所有轮播图
-router.get("/api/banners/all", getAllBanners);
+router.get("/banners/all", getAllBanners);
 
 // 添加轮播图
-router.post("/api/banners", authenticateToken, addBanner);
+router.post("/banners", authenticateToken, addBanner);
 
 // 修改轮播图
-router.put("/api/banners", authenticateToken, updateBanner);
+router.put("/banners", authenticateToken, updateBanner);
 
 // 删除轮播图
-router.delete("/api/banners", authenticateToken, deleteBanner);
+router.delete("/banners", authenticateToken, deleteBanner);
 
 export default router;

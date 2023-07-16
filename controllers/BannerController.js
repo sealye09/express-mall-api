@@ -1,6 +1,6 @@
 import Banner from "../models/Banner.js";
 
-// 获取轮播图
+// 获取首页轮播图
 export async function getBanners(req, res) {
   try {
     const banners = await Banner.find({ status: true }).sort({ rank: -1 });
@@ -15,14 +15,21 @@ export async function getBanners(req, res) {
   }
 }
 
-// 获取所有轮播图
+// 获取所有轮播图（分页）
 export async function getAllBanners(req, res) {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
   try {
-    const banners = await Banner.find();
+    const total = await Banner.countDocuments();
+    const pages = Math.ceil(total / limit);
+    const offset = (page - 1) * limit;
+
+    const banners = await Banner.find().sort({ rank: -1 }).skip(offset).limit(limit);
     res.status(200).json({
       code: 200,
       message: "Banner fetched successfully",
-      data: { banners },
+      data: { page, pages, total, banners },
     });
   } catch (error) {
     console.error("Error getting banner:", error);
@@ -48,9 +55,9 @@ export async function addBanner(req, res) {
 
 // 修改轮播图
 export async function updateBanner(req, res) {
-  const { id, banner } = req.body;
+  const { id, ...banner } = req.body;
   try {
-    const bannerToUpdate = await Banner.findById(banner.id);
+    const bannerToUpdate = await Banner.findById(id);
     if (!bannerToUpdate) {
       return res.status(401).json({ code: 401, message: "Invalid banner id", data: {} });
     }
@@ -76,12 +83,11 @@ export async function updateBanner(req, res) {
 export async function deleteBanner(req, res) {
   const { id } = req.body;
   try {
-    const bannerToDelete = await Banner.findById(id);
+    const bannerToDelete = await Banner.findByIdAndDelete(id);
     if (!bannerToDelete) {
       return res.status(401).json({ code: 401, message: "Invalid banner id", data: {} });
     }
 
-    await bannerToDelete.remove();
     res.status(200).json({
       code: 200,
       message: "Banner deleted successfully",
