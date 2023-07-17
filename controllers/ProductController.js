@@ -2,7 +2,53 @@ import Product from "../models/Product.js";
 import Category from "../models/Category.js";
 import Banner from "../models/Banner.js";
 
-// 添加商品
+/**
+ * @swagger
+ * /api/products:
+ *   post:
+ *     summary: Add a new product
+ *     description: Add a new product to the database.
+ *     tags:
+ *       - Products
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Product data to be added
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               stock:
+ *                 type: number
+ *               desc:
+ *                 type: string
+ *               cover:
+ *                 type: string
+ *               banners:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               categories:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
+ *               status:
+ *                 type: boolean
+ *               hot:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Product created successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function addProduct(req, res) {
   const { ...productData } = req.body;
 
@@ -15,7 +61,62 @@ export async function addProduct(req, res) {
   }
 }
 
-// 更新商品
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   post:
+ *     summary: Update a product
+ *     description: Update an existing product in the database.
+ *     tags:
+ *       - Products
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the product to be updated
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Product data to be updated
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               stock:
+ *                 type: number
+ *               desc:
+ *                 type: string
+ *               cover:
+ *                 type: string
+ *               banners:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               categories:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
+ *               status:
+ *                 type: boolean
+ *               hot:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Product updated successfully.
+ *       401:
+ *         description: Invalid product id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateProduct(req, res) {
   const { id } = req.params;
   const { ...productData } = req.body;
@@ -40,7 +141,35 @@ export async function updateProduct(req, res) {
   }
 }
 
-// 删除商品
+/**
+ * @swagger
+ * /api/products/delete:
+ *   post:
+ *     summary: Delete multiple products by IDs
+ *     description: Delete multiple products from the database based on their IDs.
+ *     tags:
+ *       - Products
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: List of product IDs to be deleted
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
+ *     responses:
+ *       200:
+ *         description: Products deleted successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function deleteProductsByIds(req, res) {
   const { ids } = req.body;
   try {
@@ -56,7 +185,31 @@ export async function deleteProductsByIds(req, res) {
   }
 }
 
-// 获取商品 分页
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Get paginated list of products
+ *     description: Retrieve a paginated list of products from the database.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number for pagination (default 1)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of products per page (default 10)
+ *     responses:
+ *       200:
+ *         description: Products fetched successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getProducts(req, res) {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -89,7 +242,29 @@ export async function getProducts(req, res) {
   }
 }
 
-// 获取商品详情
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   get:
+ *     summary: Get product details by ID
+ *     description: Retrieve the details of a product by its ID from the database.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the product to retrieve
+ *     responses:
+ *       200:
+ *         description: Product details fetched successfully.
+ *       401:
+ *         description: Invalid product ID.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getProductById(req, res) {
   const { id } = req.params;
 
@@ -110,7 +285,33 @@ export async function getProductById(req, res) {
   }
 }
 
-// 获取商品列表，hot
+/**
+ * @swagger
+ * /api/products/hot:
+ *   get:
+ *     summary: Get hot products
+ *     description: Retrieve a list of hot products from the database.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number for pagination (optional, default 1)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of products per page (optional, default 10)
+ *     responses:
+ *       200:
+ *         description: Hot products fetched successfully.
+ *       401:
+ *         description: Invalid product ID.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getProductsByHot(req, res) {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -144,7 +345,33 @@ export async function getProductsByHot(req, res) {
   }
 }
 
-// 获取商品列表，按创建时间排序
+/**
+ * @swagger
+ * /api/products/new:
+ *   get:
+ *     summary: Get new products
+ *     description: Retrieve a list of new products sorted by creation time from the database.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number for pagination (optional, default 1)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of products per page (optional, default 10)
+ *     responses:
+ *       200:
+ *         description: New products fetched successfully.
+ *       401:
+ *         description: Invalid product ID.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getProductsByNew(req, res) {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -170,7 +397,41 @@ export async function getProductsByNew(req, res) {
   }
 }
 
-// 给商品添加分类(多个分类)
+/**
+ * @swagger
+ * /api/products/addCats:
+ *   post:
+ *     summary: Add categories to a product
+ *     description: Add multiple categories to a product in the database.
+ *     tags:
+ *       - Products
+ *     requestBody:
+ *       description: Object containing product ID and an array of category IDs.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               productId:
+ *                 type: string
+ *                 description: Product ID to add categories to.
+ *               categoryIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: An array of category IDs to add to the product.
+ *             example:
+ *               productId: 617d2132a1b7d8a0506112a1
+ *               categoryIds: [ "617d2132a1b7d8a0506112a3", "617d2132a1b7d8a0506112a4" ]
+ *     responses:
+ *       200:
+ *         description: Categories added to the product successfully.
+ *       401:
+ *         description: Invalid product ID.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function addCategoryToProduct(req, res) {
   const { productId, categoryIds } = req.body;
 

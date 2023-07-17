@@ -2,14 +2,29 @@ import Address from "../models/Address.js";
 import User from "../models/User.js";
 
 /**
- * 获取用户地址
- * @route POST /api/users/register
- * @group user - Operations about user
- * @param {string} username.query.required - 请输入用户名
- * @param {string} password.query.required - 请输入密码
- * @param {string} email.query.required - 请输入合法邮箱
- * @returns {object} 200 - An array of user info
- * @returns {Error}  default - Unexpected error
+ * @swagger
+ * /api/users/address/{id}:
+ *   get:
+ *     summary: Get user address
+ *     description: Retrieve the user's addresses, including the default address, by user ID.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: User ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User address fetched successfully.
+ *       401:
+ *         description: Invalid user id.
+ *       500:
+ *         description: Internal server error.
  */
 export async function getUserAddress(req, res) {
   const { id } = req.params;
@@ -30,7 +45,37 @@ export async function getUserAddress(req, res) {
   }
 }
 
-// 添加用户地址
+/**
+ * @swagger
+ * /api/users/address:
+ *   post:
+ *     summary: Add user address
+ *     description: Add a new address for the user and set it as the default address if the user doesn't have one.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: User ID
+ *               detail:
+ *                 type: string
+ *                 description: Address details
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User address added successfully.
+ *       401:
+ *         description: Invalid user id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function addUserAddress(req, res) {
   const { id, detail } = req.body;
 
@@ -61,7 +106,43 @@ export async function addUserAddress(req, res) {
   }
 }
 
-// 修改用户地址
+/**
+ * @swagger
+ * /api/users/address/update:
+ *   post:
+ *     summary: Update user address
+ *     description: Update an existing address for the user.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: User ID
+ *               address:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     description: Address ID
+ *                   detail:
+ *                     type: string
+ *                     description: Address details
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User address updated successfully.
+ *       401:
+ *         description: Invalid address id or user id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateUserAddress(req, res) {
   const { id, address } = req.body;
   try {
@@ -89,7 +170,37 @@ export async function updateUserAddress(req, res) {
   }
 }
 
-// 修改默认地址
+/**
+ * @swagger
+ * /api/users/address/default:
+ *   post:
+ *     summary: Update user default address
+ *     description: Update the user's default address.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: User ID
+ *               addressId:
+ *                 type: string
+ *                 description: Address ID to set as default
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Default address updated successfully.
+ *       401:
+ *         description: Invalid user id or address not found.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateUserDefaultAddress(req, res) {
   const { id, addressId } = req.body;
 
@@ -114,7 +225,37 @@ export async function updateUserDefaultAddress(req, res) {
   }
 }
 
-// 删除用户地址
+/**
+ * @swagger
+ * /api/users/address/delete:
+ *   delete:
+ *     summary: Delete user address
+ *     description: Delete a user's address by ID.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: User ID
+ *               addressId:
+ *                 type: string
+ *                 description: Address ID to delete
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User address deleted successfully.
+ *       401:
+ *         description: Invalid user id or address not found.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function deleteAddress(req, res) {
   const { id, addressId } = req.body;
 

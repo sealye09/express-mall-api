@@ -1,9 +1,22 @@
 import Banner from "../models/Banner.js";
 
-// 获取首页轮播图
+/**
+ * @swagger
+ * /api/banners:
+ *   get:
+ *     summary: Get home page banners
+ *     description: Retrieve the home page banners that are currently active, sorted by rank.
+ *     tags:
+ *       - Banners
+ *     responses:
+ *       200:
+ *         description: Banners fetched successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getBanners(req, res) {
   try {
-    const banners = await Banner.find({ status: true }).sort({ rank: -1 });
+    const banners = await Banner.find({ status: true }).sort({ rank: -1 }).limit(5);
     res.status(200).json({
       code: 200,
       message: "Banner fetched successfully",
@@ -15,7 +28,34 @@ export async function getBanners(req, res) {
   }
 }
 
-// 获取所有轮播图（分页）
+/**
+ * @description 获取所有轮播图（分页）
+ * @swagger
+ * /api/banners/all:
+ *   get:
+ *     summary: Get all banners (paginated)
+ *     description: Get a list of all banners with pagination.
+ *     tags:
+ *       - Banners
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           description: Page number for pagination (default: 1).
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           description: Number of banners per page (default: 10).
+ *     responses:
+ *       200:
+ *         description: List of banners fetched successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getAllBanners(req, res) {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
@@ -37,7 +77,45 @@ export async function getAllBanners(req, res) {
   }
 }
 
-// 添加轮播图
+/**
+ * @swagger
+ * /api/banners:
+ *   post:
+ *     summary: Add a new banner
+ *     description: Add a new banner to the database.
+ *     tags:
+ *       - Banners
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Banner object to be added
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "New Banner"
+ *               image:
+ *                 type: string
+ *                 example: "https://example.com/banner.jpg"
+ *               url:
+ *                 type: string
+ *                 example: "https://example.com"
+ *               rank:
+ *                 type: integer
+ *                 example: 1
+ *               desc:
+ *                 type: string
+ *                 example: "Banner description"
+ *     responses:
+ *       200:
+ *         description: Banner added successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function addBanner(req, res) {
   const { title, image, url, rank, desc } = req.body;
   try {
@@ -53,7 +131,48 @@ export async function addBanner(req, res) {
   }
 }
 
-// 修改轮播图
+/**
+ * @swagger
+ * /api/banners:
+ *   put:
+ *     summary: Update a banner
+ *     description: Update an existing banner in the database.
+ *     tags:
+ *       - Banners
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Banner object to be updated
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: "615c3f3b9a8a165d38d82d52"
+ *               title:
+ *                 type: string
+ *                 example: "Updated Banner"
+ *               image:
+ *                 type: string
+ *                 example: "https://example.com/updated_banner.jpg"
+ *               url:
+ *                 type: string
+ *                 example: "https://example.com/updated"
+ *               rank:
+ *                 type: integer
+ *                 example: 2
+ *               desc:
+ *                 type: string
+ *                 example: "Updated banner description"
+ *     responses:
+ *       200:
+ *         description: Banner updated successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateBanner(req, res) {
   const { id, ...banner } = req.body;
   try {
@@ -79,7 +198,35 @@ export async function updateBanner(req, res) {
   }
 }
 
-// 删除轮播图
+/**
+ * @swagger
+ * /api/banners:
+ *   delete:
+ *     summary: Delete a banner
+ *     description: Delete an existing banner from the database.
+ *     tags:
+ *       - Banners
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Banner ID to be deleted
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: "615c3f3b9a8a165d38d82d52"
+ *     responses:
+ *       200:
+ *         description: Banner deleted successfully.
+ *       401:
+ *         description: Invalid banner id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function deleteBanner(req, res) {
   const { id } = req.body;
   try {

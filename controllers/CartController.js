@@ -1,7 +1,43 @@
 import Product from "../models/Product.js";
 import User from "../models/User.js";
 
-// 添加商品到购物车
+/**
+ * @swagger
+ * /api/cart/{id}:
+ *   post:
+ *     summary: Add product to user's cart
+ *     description: Add a product with quantity to the user's cart.
+ *     tags:
+ *       - Cart
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the user to add the product to the cart.
+ *       - in: body
+ *         name: product
+ *         description: Product ID and quantity to be added to the cart.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             productId:
+ *               type: string
+ *             quantity:
+ *               type: integer
+ *         example:
+ *           productId: "617d2132a1b7d8a0506112a6"
+ *           quantity: 2
+ *     responses:
+ *       200:
+ *         description: Product added to cart successfully.
+ *       401:
+ *         description: User or product not found.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function addProductToCart(req, res) {
   const { id } = req.params;
   const { productId, quantity } = req.body;
@@ -42,7 +78,35 @@ export async function addProductToCart(req, res) {
   }
 }
 
-// 将商品移除购物车
+/**
+ * @swagger
+ * /api/cart:
+ *   delete:
+ *     summary: Remove product from user's cart
+ *     description: Remove a product from the user's cart.
+ *     tags:
+ *       - Cart
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the user to remove the product from the cart.
+ *       - in: query
+ *         name: productId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the product to be removed from the cart.
+ *     responses:
+ *       200:
+ *         description: Product removed from cart successfully.
+ *       401:
+ *         description: User not found.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function removeProductFromCart(req, res) {
   const { userId, productId } = req.body;
 
@@ -73,7 +137,29 @@ export async function removeProductFromCart(req, res) {
   }
 }
 
-// 获取购物车商品
+/**
+ * @swagger
+ * /api/cart/{id}:
+ *   get:
+ *     summary: Get cart products for a user
+ *     description: Get the list of products in the user's cart.
+ *     tags:
+ *       - Cart
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the user to get the cart products.
+ *     responses:
+ *       200:
+ *         description: Cart products retrieved successfully.
+ *       401:
+ *         description: User not found.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getCartProducts(req, res) {
   const { id } = req.params;
 
@@ -100,7 +186,42 @@ export async function getCartProducts(req, res) {
   }
 }
 
-// 更新购物车商品数量
+/**
+ * @swagger
+ * /api/cart:
+ *   put:
+ *     summary: Update cart product quantity
+ *     description: Update the quantity of a product in the user's cart.
+ *     tags:
+ *       - Cart
+ *     requestBody:
+ *       description: Request body with user ID, product ID, and new quantity.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               productId:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *             example:
+ *               userId: "617d2132a1b7d8a0506112a6"
+ *               productId: "617d2132a1b7d8a0506112a7"
+ *               quantity: 3
+ *     responses:
+ *       200:
+ *         description: Cart product quantity updated successfully.
+ *       401:
+ *         description: User not found.
+ *       404:
+ *         description: Product not found in cart.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateCartProductQuantity(req, res) {
   const { userId, productId, quantity } = req.body;
 

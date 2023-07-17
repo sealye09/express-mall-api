@@ -16,22 +16,6 @@ npm install
 npm run
 ```
 
-### 数据库模型设计
+##### swagger ui
 
-#### 用户模型
-
-
-
-#### 商品模型
-
-
-
-#### 订单模型
-
-
-#### 购物车模型
-
-#### Banner
-
-#### 地址模型
-
+http://localhost:3003/api-docs
