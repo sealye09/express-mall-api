@@ -1,4 +1,6 @@
 node_modules
 log
 
-public
+public/image/*
+public/uploads/*
+

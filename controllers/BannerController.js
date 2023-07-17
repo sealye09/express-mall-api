@@ -43,13 +43,13 @@ export async function getBanners(req, res) {
  *         schema:
  *           type: integer
  *           minimum: 1
- *           description: Page number for pagination (default: 1).
+ *           description: Page number for pagination (default 1).
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
  *           minimum: 1
- *           description: Number of banners per page (default: 10).
+ *           description: Number of banners per page (default 10).
  *     responses:
  *       200:
  *         description: List of banners fetched successfully.
