@@ -7,8 +7,7 @@ import Product from "../models/Product.js";
  *   post:
  *     summary: Create category
  *     description: Create a new category.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     requestBody:
  *       required: true
  *       content:
@@ -51,8 +50,7 @@ export async function createCategory(req, res) {
  *   get:
  *     summary: Get all categories
  *     description: Get all categories with their details.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     responses:
  *       200:
  *         description: Categories retrieved successfully.
@@ -83,8 +81,7 @@ export async function getAllCategories(req, res) {
  *   get:
  *     summary: Get paged categories
  *     description: Get paged categories with their details.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     parameters:
  *       - in: query
  *         name: page
@@ -125,8 +122,7 @@ export async function getCategories(req, res) {
  *   get:
  *     summary: Get category by ID
  *     description: Get category details by its ID.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: id
@@ -163,8 +159,7 @@ export async function getCategory(req, res) {
  *   post:
  *     summary: Update category by ID
  *     description: Update category information by its ID.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: id
@@ -213,8 +208,7 @@ export async function updateCategory(req, res) {
  *   delete:
  *     summary: Delete category by ID
  *     description: Delete a category by its ID.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: id
@@ -250,8 +244,7 @@ export async function deleteCategory(req, res) {
  *   get:
  *     summary: Get products by category ID
  *     description: Retrieve all products belonging to a specific category.
- *     tags:
- *       - Categories
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: id

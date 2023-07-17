@@ -8,8 +8,7 @@ import Banner from "../models/Banner.js";
  *   post:
  *     summary: Add a new product
  *     description: Add a new product to the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -67,8 +66,7 @@ export async function addProduct(req, res) {
  *   post:
  *     summary: Update a product
  *     description: Update an existing product in the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -147,8 +145,7 @@ export async function updateProduct(req, res) {
  *   post:
  *     summary: Delete multiple products by IDs
  *     description: Delete multiple products from the database based on their IDs.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -191,8 +188,7 @@ export async function deleteProductsByIds(req, res) {
  *   get:
  *     summary: Get paginated list of products
  *     description: Retrieve a paginated list of products from the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     parameters:
  *       - in: query
  *         name: page
@@ -248,8 +244,7 @@ export async function getProducts(req, res) {
  *   get:
  *     summary: Get product details by ID
  *     description: Retrieve the details of a product by its ID from the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -291,8 +286,7 @@ export async function getProductById(req, res) {
  *   get:
  *     summary: Get hot products
  *     description: Retrieve a list of hot products from the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     parameters:
  *       - in: query
  *         name: page
@@ -351,8 +345,7 @@ export async function getProductsByHot(req, res) {
  *   get:
  *     summary: Get new products
  *     description: Retrieve a list of new products sorted by creation time from the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     parameters:
  *       - in: query
  *         name: page
@@ -403,8 +396,7 @@ export async function getProductsByNew(req, res) {
  *   post:
  *     summary: Add categories to a product
  *     description: Add multiple categories to a product in the database.
- *     tags:
- *       - Products
+ *     tags: [Products]
  *     requestBody:
  *       description: Object containing product ID and an array of category IDs.
  *       required: true

@@ -7,8 +7,7 @@ import User from "../models/User.js";
  *   post:
  *     summary: Add product to user's cart
  *     description: Add a product with quantity to the user's cart.
- *     tags:
- *       - Cart
+ *     tags: [Cart]
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,8 +83,7 @@ export async function addProductToCart(req, res) {
  *   delete:
  *     summary: Remove product from user's cart
  *     description: Remove a product from the user's cart.
- *     tags:
- *       - Cart
+ *     tags: [Cart]
  *     parameters:
  *       - in: query
  *         name: userId
@@ -143,8 +141,7 @@ export async function removeProductFromCart(req, res) {
  *   get:
  *     summary: Get cart products for a user
  *     description: Get the list of products in the user's cart.
- *     tags:
- *       - Cart
+ *     tags: [Cart]
  *     parameters:
  *       - in: path
  *         name: id
@@ -192,8 +189,7 @@ export async function getCartProducts(req, res) {
  *   put:
  *     summary: Update cart product quantity
  *     description: Update the quantity of a product in the user's cart.
- *     tags:
- *       - Cart
+ *     tags: [Cart]
  *     requestBody:
  *       description: Request body with user ID, product ID, and new quantity.
  *       required: true

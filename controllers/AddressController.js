@@ -7,8 +7,7 @@ import User from "../models/User.js";
  *   get:
  *     summary: Get user address
  *     description: Retrieve the user's addresses, including the default address, by user ID.
- *     tags:
- *       - Users
+ *     tags: [Addresses]
  *     parameters:
  *       - name: id
  *         in: path
@@ -51,8 +50,7 @@ export async function getUserAddress(req, res) {
  *   post:
  *     summary: Add user address
  *     description: Add a new address for the user and set it as the default address if the user doesn't have one.
- *     tags:
- *       - Users
+ *     tags: [Addresses]
  *     requestBody:
  *       required: true
  *       content:
@@ -112,8 +110,7 @@ export async function addUserAddress(req, res) {
  *   post:
  *     summary: Update user address
  *     description: Update an existing address for the user.
- *     tags:
- *       - Users
+ *     tags: [Addresses]
  *     requestBody:
  *       required: true
  *       content:
@@ -176,8 +173,7 @@ export async function updateUserAddress(req, res) {
  *   post:
  *     summary: Update user default address
  *     description: Update the user's default address.
- *     tags:
- *       - Users
+ *     tags: [Addresses]
  *     requestBody:
  *       required: true
  *       content:
@@ -231,8 +227,7 @@ export async function updateUserDefaultAddress(req, res) {
  *   delete:
  *     summary: Delete user address
  *     description: Delete a user's address by ID.
- *     tags:
- *       - Users
+ *     tags: [Addresses]
  *     requestBody:
  *       required: true
  *       content:

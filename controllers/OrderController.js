@@ -8,8 +8,7 @@ import Product from "../models/Product.js";
  *   post:
  *     summary: Create a new order
  *     description: Create a new order in the database.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     requestBody:
  *       description: Object containing user ID, products, and address information.
  *       required: true
@@ -114,8 +113,7 @@ export async function createOrder(req, res) {
  *   get:
  *     summary: Get all orders with pagination
  *     description: Retrieve a list of all orders from the database with pagination.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     parameters:
  *       - in: query
  *         name: page
@@ -165,8 +163,7 @@ export async function getOrders(req, res) {
  *   get:
  *     summary: Get user orders
  *     description: Retrieve a list of all orders placed by a specific user.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: id
@@ -205,8 +202,7 @@ export async function getUserOrders(req, res) {
  *   get:
  *     summary: Get user canceled orders
  *     description: Retrieve a list of all canceled orders placed by a specific user.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: id
@@ -245,8 +241,7 @@ export async function getUserCanceledOrders(req, res) {
  *   get:
  *     summary: Get order details
  *     description: Retrieve the details of a specific order by its ID.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: id
@@ -283,8 +278,7 @@ export async function getOrder(req, res) {
  *   post:
  *     summary: Update order status
  *     description: Update the status of a specific order.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     requestBody:
  *       required: true
  *       content:
@@ -348,8 +342,7 @@ export async function updateOrderStatus(req, res) {
  *   post:
  *     summary: Delete order
  *     description: Delete a specific order.
- *     tags:
- *       - Orders
+ *     tags: [Orders]
  *     requestBody:
  *       required: true
  *       content:

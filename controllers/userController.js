@@ -15,8 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
  *   post:
  *     summary: Register a new user
  *     description: Register a new user with a unique username and password.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -70,8 +69,7 @@ export async function register(req, res) {
  *   post:
  *     summary: User login
  *     description: Authenticate user with username and password and generate JWT token.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -247,8 +245,7 @@ export async function updateUser(req, res) {
  *   post:
  *     summary: Update user's password
  *     description: Update the password of a user.
- *     tags:
- *       - Users
+ *     tags: [Users]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -314,8 +311,7 @@ export async function updatePassword(req, res) {
  *   get:
  *     summary: Get user information
  *     description: Get detailed information about a user.
- *     tags:
- *       - Users
+ *     tags: [Users]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -357,8 +353,7 @@ export async function getUserInfo(req, res) {
  *   post:
  *     summary: Delete users by IDs
  *     description: Delete multiple users by their IDs.
- *     tags:
- *       - Users
+ *     tags: [Users]
  *     security:
  *       - bearerAuth: []
  *     requestBody:

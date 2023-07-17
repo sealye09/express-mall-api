@@ -6,8 +6,7 @@ import Banner from "../models/Banner.js";
  *   get:
  *     summary: Get home page banners
  *     description: Retrieve the home page banners that are currently active, sorted by rank.
- *     tags:
- *       - Banners
+ *     tags: [Banners]
  *     responses:
  *       200:
  *         description: Banners fetched successfully.
@@ -35,8 +34,7 @@ export async function getBanners(req, res) {
  *   get:
  *     summary: Get all banners (paginated)
  *     description: Get a list of all banners with pagination.
- *     tags:
- *       - Banners
+ *     tags: [Banners]
  *     parameters:
  *       - in: query
  *         name: page
@@ -83,8 +81,7 @@ export async function getAllBanners(req, res) {
  *   post:
  *     summary: Add a new banner
  *     description: Add a new banner to the database.
- *     tags:
- *       - Banners
+ *     tags: [Banners]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -137,8 +134,7 @@ export async function addBanner(req, res) {
  *   put:
  *     summary: Update a banner
  *     description: Update an existing banner in the database.
- *     tags:
- *       - Banners
+ *     tags: [Banners]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -204,8 +200,7 @@ export async function updateBanner(req, res) {
  *   delete:
  *     summary: Delete a banner
  *     description: Delete an existing banner from the database.
- *     tags:
- *       - Banners
+ *     tags: [Banners]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
