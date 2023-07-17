@@ -5,8 +5,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
-import YAML from "yamljs";
 
+import swaggerConfig from "./config/swagger.js";
 import { dbConnext } from "./config/db.js";
 
 // routes import
@@ -15,7 +15,7 @@ import routes from "./routes/index.js";
 /* 配置 */
 dotenv.config();
 const app = express();
-const swaggerDocument = YAML.load("./swagger.yaml");
+// const swaggerDocument = YAML.load("./swagger.yaml");
 
 // 将 public 目录设置为静态资源目录
 app.use(express.static("public"));
@@ -26,10 +26,9 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use(swaggerConfig)
 
 /* 路由 */
-// 配置Swagger UI路由
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/", routes);
 
 /* 数据库 */

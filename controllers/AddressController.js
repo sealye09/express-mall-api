@@ -1,7 +1,16 @@
 import Address from "../models/Address.js";
 import User from "../models/User.js";
 
-// 获取用户地址
+/**
+ * 获取用户地址
+ * @route POST /api/users/register
+ * @group user - Operations about user
+ * @param {string} username.query.required - 请输入用户名
+ * @param {string} password.query.required - 请输入密码
+ * @param {string} email.query.required - 请输入合法邮箱
+ * @returns {object} 200 - An array of user info
+ * @returns {Error}  default - Unexpected error
+ */
 export async function getUserAddress(req, res) {
   const { id } = req.params;
   try {

@@ -9,7 +9,37 @@ dotenv.config();
 // 密钥
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// 注册
+/**
+ * @swagger
+ * /api/register:
+ *   post:
+ *     summary: Register a new user
+ *     description: Register a new user with a unique username and password.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 default: admin
+ *                 description: The unique username of the user to be registered.
+ *               password:
+ *                 type: string
+ *                 default: admin
+ *                 description: The password of the user to be registered.
+ *     responses:
+ *       200:
+ *         description: User registered successfully.
+ *       409:
+ *         description: Username already exists.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function register(req, res) {
   const { username, password } = req.body;
   try {
@@ -34,7 +64,37 @@ export async function register(req, res) {
   }
 }
 
-// 登录
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     summary: User login
+ *     description: Authenticate user with username and password and generate JWT token.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 default: admin
+ *                 description: The username of the user to be authenticated.
+ *               password:
+ *                 type: string
+ *                 default: admin
+ *                 description: The password of the user to be authenticated.
+ *     responses:
+ *       200:
+ *         description: Login success. Returns user information and JWT token.
+ *       401:
+ *         description: Invalid credentials. Username or password is incorrect.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function login(req, res) {
   const { username, password } = req.body;
   try {
@@ -60,7 +120,30 @@ export async function login(req, res) {
   }
 }
 
-// 分页查询用户列表
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get a list of users
+ *     description: Retrieve a paginated list of users.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: The page number to retrieve (default is 1).
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: The number of users to return per page (default is 10).
+ *     responses:
+ *       200:
+ *         description: Users fetched successfully. Returns paginated list of users.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getUsers(req, res) {
   const page = parseInt(req.query.page) || 1; // 当前页码，默认为第一页
   const limit = parseInt(req.query.limit) || 10; // 每页显示的用户数量，默认为10个
@@ -89,7 +172,48 @@ export async function getUsers(req, res) {
   }
 }
 
-// 更新用户信息
+/**
+ * @swagger
+ * /api/users/update:
+ *   post:
+ *     summary: Update user's information
+ *     description: Update the information of a user.
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: User ID and update data
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the user to be updated.
+ *               username:
+ *                 type: string
+ *               nickname:
+ *                 type: string
+ *               avatar:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *             example:
+ *               id: 111
+ *               username: admin
+ *               nickname: Admin
+ *     responses:
+ *       200:
+ *         description: User updated successfully.
+ *       401:
+ *         description: Invalid user id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updateUser(req, res) {
   const { id, ...updateData } = req.body;
   delete updateData.password; // 禁止更新密码
@@ -117,7 +241,42 @@ export async function updateUser(req, res) {
   }
 }
 
-// 修改密码
+/**
+ * @swagger
+ * /api/users/updatePassword:
+ *   post:
+ *     summary: Update user's password
+ *     description: Update the password of a user.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: User ID and old/new password
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *               oldPassword:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *             example:
+ *               id: user123
+ *               oldPassword: oldpass123
+ *               newPassword: newpass456
+ *     responses:
+ *       200:
+ *         description: Password updated successfully.
+ *       401:
+ *         description: Invalid user id or old password.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function updatePassword(req, res) {
   const { id, oldPassword, newPassword } = req.body;
 
@@ -149,7 +308,32 @@ export async function updatePassword(req, res) {
   }
 }
 
-// 获取用户信息
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get user information
+ *     description: Get detailed information about a user.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: User ID
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: objectId
+ *     responses:
+ *       200:
+ *         description: User information fetched successfully.
+ *       401:
+ *         description: Invalid user id.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function getUserInfo(req, res) {
   const { id } = req.params;
   try {
@@ -166,7 +350,36 @@ export async function getUserInfo(req, res) {
   }
 }
 
-// 删除用户
+
+/**
+ * @swagger
+ * /api/users/delete:
+ *   post:
+ *     summary: Delete users by IDs
+ *     description: Delete multiple users by their IDs.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       description: Array of user IDs to be deleted
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: objectId
+ *     responses:
+ *       200:
+ *         description: Users deleted successfully.
+ *       500:
+ *         description: Internal server error.
+ */
 export async function deleteUserByIds(req, res) {
   const { ids } = req.body;
   try {

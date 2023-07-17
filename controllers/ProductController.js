@@ -133,7 +133,7 @@ export async function getProductsByHot(req, res) {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       code: 200,
       message: "Get success",
       data: { total, pages, page, products },
@@ -161,12 +161,12 @@ export async function getProductsByNew(req, res) {
       .populate("banners")
       .populate("categories");
 
-    res
+    return res
       .status(200)
       .json({ code: 200, message: "Get success", data: { total, pages, page, products } });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+    return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
 
