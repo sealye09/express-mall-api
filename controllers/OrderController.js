@@ -2,6 +2,8 @@ import Order from "../models/Order.js";
 import User from "../models/User.js";
 import Product from "../models/Product.js";
 
+const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已取消"];
+
 /**
  * @swagger
  * /api/orders:
@@ -198,15 +200,21 @@ export async function getUserOrders(req, res) {
 
 /**
  * @swagger
- * /api/orders/canceled/{id}:
+ * /api/orders/{status}/{id}:
  *   get:
- *     summary: Get user canceled orders
- *     description: Retrieve a list of all canceled orders placed by a specific user.
+ *     summary: Get user orders by status
+ *     description: Get user orders by status
  *     tags: [Orders]
  *     parameters:
  *       - in: path
  *         name: id
  *         description: The ID of the user whose canceled orders to retrieve.
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: status
+ *         description: The status of the order to retrieve.
  *         schema:
  *           type: string
  *         required: true
@@ -218,15 +226,24 @@ export async function getUserOrders(req, res) {
  *       500:
  *         description: Internal server error.
  */
-export async function getUserCanceledOrders(req, res) {
-  const { id } = req.params;
+export async function getUserOrdersByStatus(req, res) {
+  const { id, status } = req.params;
+
+  if (status === "all") {
+    return getUserOrders(req, res);
+  }
+
+  if (!CONST_STATUS.includes(status)) {
+    return res.status(400).json({ code: 400, message: "无效的订单状态", data: {} });
+  }
+
   try {
     const user = await User.findById(id);
     if (!user) {
       return res.status(401).json({ code: 401, message: "用户不存在", data: {} });
     }
 
-    const orders = await Order.find({ user: id, status: false }).populate("products.product");
+    const orders = await Order.find({ user: id, status: status }).populate("products.product");
 
     return res.status(200).json({ code: 200, message: "获取用户订单成功", data: { orders } });
   } catch (error) {
@@ -310,12 +327,11 @@ export async function getOrder(req, res) {
  *         description: Internal server error.
  */
 export async function updateOrderStatus(req, res) {
-  const constStatus = ["待支付", "已支付", "已发货", "已完成", "已取消"];
   const { userId, orderId, status } = req.body;
   if (!status) {
     return res.status(400).json({ code: 400, message: "状态不能为空", data: {} });
   }
-  if (!constStatus.includes(status)) {
+  if (!CONST_STATUS.includes(status)) {
     return res.status(400).json({ code: 400, message: "状态不正确", data: {} });
   }
   try {

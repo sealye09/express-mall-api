@@ -8,7 +8,7 @@ import {
   getOrder,
   updateOrderStatus,
   deleteOrder,
-  getUserCanceledOrders,
+  getUserOrdersByStatus,
 } from "../controllers/OrderController.js";
 
 const router = express.Router();
@@ -28,8 +28,8 @@ router.get("/orders/:id", authenticateToken, getOrder);
 // 更新订单状态
 router.post("/orders/update", authenticateToken, updateOrderStatus);
 
-// 获取用户的订单(已取消)
-router.get("/orders/canceled/:id", authenticateToken, getUserCanceledOrders);
+// 获取用户的订单(根据订单状态)
+router.get("/orders/:status/:id", authenticateToken, getUserOrdersByStatus);
 
 // 删除订单
 router.post("/orders/delete", authenticateToken, deleteOrder);
