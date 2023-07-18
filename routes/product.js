@@ -11,6 +11,7 @@ import {
   getProductsByHot,
   getProductsByNew,
   addCategoryToProduct,
+  searchProducts,
 } from "../controllers/ProductController.js";
 
 import { addProductToCart } from "../controllers/CartController.js";
@@ -32,6 +33,9 @@ router.get("/products/hot", getProductsByHot);
 
 // 获取新品商品
 router.get("/products/new", getProductsByNew);
+
+// 搜索商品 key query
+router.get("/products/search", searchProducts);
 
 // 给商品添加分类
 router.post("/products/addCats", authenticateToken, addCategoryToProduct);

@@ -453,3 +453,76 @@ export async function addCategoryToProduct(req, res) {
     res.status(500).json({ code: 500, message: "Internal server error", data: {} });
   }
 }
+
+/**
+ * @swagger
+ * /api/products/search:
+ *   get:
+ *     summary: Search products by keyword
+ *     description: Get a list of products that match the search keyword.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: key
+ *         description: The keyword to search for products.
+ *         required: false
+ *         schema:
+ *           type: string
+ *           example: "smartphone"
+ *       - in: query
+ *         name: page
+ *         description: The page number for pagination.
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         description: The maximum number of products to return per page.
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved products.
+ *       401:
+ *         description: Invalid product id or product not found.
+ *       500:
+ *         description: Internal server error.
+ */
+export async function searchProducts(req, res) {
+  const key = req.query.key || "";
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  try {
+    const total = await Product.countDocuments({ name: { $regex: key, $options: "i" } });
+    const pages = Math.ceil(total / limit);
+    const offset = limit * (page - 1);
+
+    const products = await Product.find({ name: { $regex: key, $options: "i" } })
+      .skip(offset)
+      .limit(limit)
+      .populate("banners")
+      .populate("categories");
+
+    if (!products) {
+      return res.status(401).json({
+        code: 401,
+        message: "Invalid product id",
+        data: {},
+      });
+    }
+
+    return res.status(200).json({
+      code: 200,
+      message: "Get success",
+      data: { total, pages, page, products },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ code: 500, message: "Internal server error", data: {} });
+  }
+}
