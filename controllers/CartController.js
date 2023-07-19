@@ -81,27 +81,30 @@ export async function addProductToCart(req, res) {
  * @swagger
  * /api/cart:
  *   delete:
- *     summary: Remove product from user's cart
- *     description: Remove a product from the user's cart.
+ *     summary: Remove product from cart
+ *     description: Remove a product from the user's shopping cart.
  *     tags: [Cart]
- *     parameters:
- *       - in: query
- *         name: userId
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the user to remove the product from the cart.
- *       - in: query
- *         name: productId
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the product to be removed from the cart.
+ *     requestBody:
+ *       description: The user ID and product ID to remove from the cart.
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: The ID of the user.
+ *                 example: "6151b515f785e54cc8888d9d"
+ *               productId:
+ *                 type: string
+ *                 description: The ID of the product to remove from the cart.
+ *                 example: "6151b515f785e54cc8888d9e"
  *     responses:
  *       200:
  *         description: Product removed from cart successfully.
  *       401:
- *         description: User not found.
+ *         description: Invalid user id or user not found.
  *       500:
  *         description: Internal server error.
  */

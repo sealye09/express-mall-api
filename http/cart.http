@@ -30,8 +30,8 @@ delete {{url}}/cart
 {{json}}
 
 {
-"productId": "64b23bd6cdfa8c730d256724",
-"userId": "64b2372bcdfa8c730d2566d2"
+"productId": "64b78a4b08da29a190213341",
+"userId": "64b78e3a08da29a19021339e"
 }
 
 
