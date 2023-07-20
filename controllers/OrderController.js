@@ -34,7 +34,7 @@ const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已�
  *                       type: integer
  *                       description: Quantity of the product in the order.
  *                 description: An array of products and their quantities.
- *               address:
+ *               addressId:
  *                 type: string
  *                 description: Address for shipping the order (optional, will use default address if not provided).
  *             example:
@@ -43,7 +43,7 @@ const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已�
  *                 { productId: "617d2132a1b7d8a0506112a3", quantity: 2 },
  *                 { productId: "617d2132a1b7d8a0506112a4", quantity: 1 }
  *               ]
- *               address: "123 Main St, City, State, Zip"
+ *               addressId: "617d2132a1b7d8a0506112a4"
  *     responses:
  *       200:
  *         description: Order created successfully.
@@ -55,7 +55,7 @@ const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已�
  *         description: Internal server error.
  */
 export async function createOrder(req, res) {
-  const { userId, products, address } = req.body;
+  const { userId, products,  addressId } = req.body;
 
   const user = await User.findById(userId);
 
@@ -94,7 +94,7 @@ export async function createOrder(req, res) {
     const order = await Order.create({
       user: userId,
       products: validProducts,
-      address: address || user.default_address,
+      address: addressId || user.default_address,
       price,
       status: "待支付",
     });
