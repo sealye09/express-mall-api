@@ -55,7 +55,7 @@ const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已�
  *         description: Internal server error.
  */
 export async function createOrder(req, res) {
-  const { userId, products,  addressId } = req.body;
+  const { userId, products, addressId } = req.body;
 
   const user = await User.findById(userId);
 
@@ -277,7 +277,7 @@ export async function getUserOrdersByStatus(req, res) {
 export async function getOrder(req, res) {
   const { id } = req.params;
   try {
-    const order = await Order.findById(id);
+    const order = await Order.findById(id).populate("products.product").populate("address");
     if (!order) {
       return res.status(404).json({ code: 404, message: "订单不存在", data: {} });
     }
