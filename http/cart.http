@@ -1,7 +1,7 @@
 @url=http://localhost:3003/api
 @json=Content-Type: application/json
 
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluNiIsImlhdCI6MTY4OTM4NTY2MX0.pjC353YhMdZ2FiullXVe8VYeFNLQgbbnSoE8V5EJU2I
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjg5NzY3MDQ5fQ.lDkA_Yx2oq7j9ATrxo7D2UBxJeEHNwTY2KB5xbNaQ5g
 
 @auth=Authorization: {{token}}
 
@@ -30,8 +30,8 @@ delete {{url}}/cart
 {{json}}
 
 {
-"productId": "64b78a4b08da29a190213341",
-"userId": "64b78e3a08da29a19021339e"
+"productId": "64b23bd6cdfa8c730d256724",
+"userId": "64b4f2c9acac9acd5b3654f4"
 }
 
 

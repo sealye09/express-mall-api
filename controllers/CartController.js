@@ -126,6 +126,7 @@ export async function removeProductFromCart(req, res) {
     user.cart = updatedCart;
     await user.save();
     const cart = user.cart;
+    console.log("🚀 ~ file: CartController.js:129 ~ removeProductFromCart ~ cart:", cart)
 
     res.status(200).json({
       code: 200,
