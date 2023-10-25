@@ -1,6 +1,6 @@
 ## express mall api
 
-一个基于 express 开发的简单商城 api
+一个基于 express 和 mongodb 开发的商城 api
 
 ### 开始
 
@@ -13,7 +13,7 @@ npm install
 ##### 启动项目
 
 ```bash
-npm run
+npm run dev
 ```
 
 ##### swagger ui
