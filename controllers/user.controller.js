@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
 import dotenv from "dotenv";
+
+import User from "../models/user.model.js";
 
 // 读取.env文件
 dotenv.config();

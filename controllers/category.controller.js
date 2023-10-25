@@ -1,5 +1,5 @@
-import Category from "../models/Category.js";
-import Product from "../models/Product.js";
+import Category from "../models/category.model.js";
+import Product from "../models/product.model.js";
 
 /**
  * @swagger

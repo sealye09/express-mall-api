@@ -1,14 +1,14 @@
 import express from "express";
 
 // routes import
-import TestRoutes from "./test.js";
-import UserRoutes from "./user.js";
-import ProductRoutes from "./product.js";
-import CategoryRoutes from "./category.js";
-import CartRoutes from "./cart.js";
-import OrderRoutes from "./order.js";
-import BannerRoutes from "./banner.js";
-import UploadRoutes from "./upload.js";
+import TestRoutes from "./test.route.js";
+import UserRoutes from "./user.route.js";
+import ProductRoutes from "./product.route.js";
+import CategoryRoutes from "./category.route.js";
+import CartRoutes from "./cart.route.js";
+import OrderRoutes from "./order.route.js";
+import BannerRoutes from "./banner.route.js";
+import UploadRoutes from "./upload.route.js";
 
 const router = express.Router();
 

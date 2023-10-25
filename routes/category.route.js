@@ -9,7 +9,7 @@ import {
   deleteCategory,
   getCategoryProducts,
   getAllCategories,
-} from "../controllers/CategoryController.js";
+} from "../controllers/category.controller.js";
 
 const router = express.Router();
 

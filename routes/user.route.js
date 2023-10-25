@@ -7,14 +7,14 @@ import {
   updateUser,
   updatePassword,
   deleteUserByIds,
-} from "../controllers/UserController.js";
+} from "../controllers/user.controller.js";
 import {
   updateUserAddress,
   updateUserDefaultAddress,
   getUserAddress,
   addUserAddress,
   deleteAddress,
-} from "../controllers/AddressController.js";
+} from "../controllers/address.controller.js";
 
 // 中间件
 import authenticateToken from "../middleware/auth.js";

@@ -1,6 +1,6 @@
-import Order from "../models/Order.js";
-import User from "../models/User.js";
-import Product from "../models/Product.js";
+import Order from "../models/order.model.js";
+import User from "../models/user.model.js";
+import Product from "../models/product.model.js";
 
 const CONST_STATUS = ["待支付", "已支付", "已发货", "已完成", "已取消"];
 

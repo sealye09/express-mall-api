@@ -1,6 +1,6 @@
-import Product from "../models/Product.js";
-import Category from "../models/Category.js";
-import Banner from "../models/Banner.js";
+import Product from "../models/product.model.js";
+import Category from "../models/category.model.js";
+import Banner from "../models/banner.model.js";
 
 /**
  * @swagger

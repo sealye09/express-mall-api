@@ -9,7 +9,7 @@ import {
   updateOrderStatus,
   deleteOrder,
   getUserOrdersByStatus,
-} from "../controllers/OrderController.js";
+} from "../controllers/order.controller.js";
 
 const router = express.Router();
 

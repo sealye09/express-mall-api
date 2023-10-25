@@ -7,7 +7,7 @@ import {
   updateBanner,
   deleteBanner,
   getAllBanners,
-} from "../controllers/BannerController.js";
+} from "../controllers/banner.controller.js";
 
 const router = express.Router();
 

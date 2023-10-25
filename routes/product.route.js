@@ -12,9 +12,9 @@ import {
   getProductsByNew,
   addCategoryToProduct,
   searchProducts,
-} from "../controllers/ProductController.js";
+} from "../controllers/product.controller.js";
 
-import { addProductToCart } from "../controllers/CartController.js";
+import { addProductToCart } from "../controllers/cart.controller.js";
 
 const router = express.Router();
 
